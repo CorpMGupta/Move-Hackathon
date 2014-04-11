@@ -1,0 +1,27 @@
+<h1>Employee#edit</h1>
+<p>Find me in app/views/employee/edit.html.erb</p>
+
+<%= form_tag :action => 'update', :id => @employee, method: :post %>
+
+<table border="2">
+  <tr>
+        <td>Name</td>
+        <td><%= text_field_tag('updatedname', @employee.name) %></td>
+  </tr>
+
+  <tr>
+        <td>Address</td>
+        <td><%= text_field_tag('updatedaddress', @employee.address) %></td>
+  </tr>
+
+  <tr>
+        <td>Phone</td>
+        <td><%= text_field_tag('updatedphone', @employee.phone) %></td>
+  </tr>
+
+</table>
+
+<%= submit_tag 'Edit' %>
+
+<%= link_to 'Back', {:action => 'list'} %>
+

@@ -1,0 +1,22 @@
+<h1>Employee#list</h1>
+<p>Find me in app/views/employee/list.html.erb</p>
+
+<% if @employees.blank? %>
+    <p>There are no employees currently in the system.</p>
+<% else %>
+    <p>These are the current employees in our system</p>
+    <table border="2">
+      <% @employees.each do |c| %>
+          <tr>
+            <td><%= c.id %></td>
+            <td><%= c.name %></td>
+            <td><%= c.address %></td>
+            <td><%= c.phone %></td>
+            <td><%= link_to 'Show', {:action => 'show', :id => c.id} %></td>
+            <td><%= link_to 'Edit', {:action => 'edit', :id => c.id} %></td>
+            <td><%= link_to 'Delete', {:action => 'destroy', :id => c.id}, :confirm => 'Are you sure you want to delete this item?' %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+<p><%= link_to 'Add new Employee', {:action => 'new' } %></p>

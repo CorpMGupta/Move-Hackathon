@@ -1,0 +1,19 @@
+<h1>Employee#new</h1>
+<p>Find me in app/views/employee/new.html.erb</p>
+
+<%= form_for :employee, url:employee_create_path  do |f| %>
+
+    <p>Name</p>
+    <p><%= f.text_field :name %></p>
+
+    <p>Address</p>
+    <p><%= f.text_area :address %></p>
+
+    <p>Phone</p>
+    <p><%= f.text_field :phone %></p>
+
+    <%= f.submit %>
+
+<% end %>
+
+<%= link_to 'Back', {:action => 'list'} %>
