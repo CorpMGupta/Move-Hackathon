@@ -1,2 +1,10 @@
 <h1>Team#show</h1>
-<p>Find me in app/views/team/show.html.erb</p>
+
+<h1><%= @team.name %></h1>
+<hr />
+<p><%= @team.members %></p>
+<p><%= @team.description %></p>
+<p><%= @team.summary %></p>
+<p><%= @team.screenshot %></p>
+
+<%= link_to 'Back', {:action => 'list'} %>

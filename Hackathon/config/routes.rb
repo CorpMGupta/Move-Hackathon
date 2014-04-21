@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-
-
   get 'rating/create'
 
   get 'rating/new'
@@ -51,6 +49,10 @@ Rails.application.routes.draw do
   get 'team/new'
 
   get 'team/destroy'
+
+  post 'team/create'
+  post 'team/update'
+  delete 'team/destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

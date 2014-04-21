@@ -1,2 +1,19 @@
 <h1>Team#list</h1>
-<p>Find me in app/views/team/list.html.erb</p>
+
+<% if @teams.blank? %>
+    <p>There are no teams currently in the system.</p>
+<% else %>
+    <p>These are the current teams in our system</p>
+    <table border="2">
+      <% @teams.each do |c| %>
+          <tr>
+            <td><%= c.name %></td>
+            <td><%= c.members %></td>
+            <td><%= link_to 'Show', {:action => 'show', :id => c.id} %></td>
+            <td><%= link_to 'Edit', {:action => 'edit', :id => c.id} %></td>
+            <td><%= link_to 'Delete', {:action => 'destroy', :id => c.id}, :confirm => 'Are you sure you want to delete this item?' %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+<p><%= link_to 'Prepare new team', {:action => 'new' } %></p>

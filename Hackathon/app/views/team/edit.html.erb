@@ -1,2 +1,35 @@
 <h1>Team#edit</h1>
-<p>Find me in app/views/team/edit.html.erb</p>
+
+<%= form_tag :action => 'update', :id => @team, method: :post %>
+
+<table border="2">
+  <tr>
+    <td>Name</td>
+    <td><%= text_field_tag('updatedname', @team.name) %></td>
+  </tr>
+
+  <tr>
+    <td>Members</td>
+    <td><%= text_area_tag('updatedmembers', @team.members) %></td>
+  </tr>
+
+  <tr>
+    <td>Description</td>
+    <td><%= text_area_tag('updateddesc', @team.description) %></td>
+  </tr>
+
+  <tr>
+    <td>Summary</td>
+    <td><%= text_area_tag('updatedsummary', @team.summary) %></td>
+  </tr>
+
+  <tr>
+    <td>Screenshot(s) Url</td>
+    <td><%= text_area_tag('updatedscreenshot', @team.screenshot) %></td>
+  </tr>
+
+</table>
+
+<%= submit_tag 'Edit' %>
+
+<%= link_to 'Back', {:action => 'list'} %>
