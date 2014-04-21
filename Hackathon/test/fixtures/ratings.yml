@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tid: 1
+  overall: MyString
+  cat1: MyString
+  cat2: MyString
+  cat3: MyString
+  cat4: MyString
+  cat5: MyString
+  jid: 1
+  comment: MyString
+
+two:
+  tid: 1
+  overall: MyString
+  cat1: MyString
+  cat2: MyString
+  cat3: MyString
+  cat4: MyString
+  cat5: MyString
+  jid: 1
+  comment: MyString
