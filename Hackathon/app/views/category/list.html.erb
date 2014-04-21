@@ -1,2 +1,17 @@
 <h1>Category#list</h1>
-<p>Find me in app/views/category/list.html.erb</p>
+
+<% if @categories.blank? %>
+    <p>There are no categories currently in the system.</p>
+<% else %>
+    <p>These are the current categories in our system</p>
+    <table border="2">
+      <% @categories.each do |c| %>
+          <tr>
+            <td><%= c.name %></td>
+            <td><%= link_to 'Edit', {:action => 'edit', :id => c.id} %></td>
+            <td><%= link_to 'Delete', {:action => 'destroy', :id => c.id}, :confirm => 'Confirm deletion?' %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+<p><%= link_to 'Create new category', {:action => 'new' } %></p>

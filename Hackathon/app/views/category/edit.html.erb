@@ -1,0 +1,14 @@
+<h1>Category#edit</h1>
+
+<%= form_tag :action => 'update', :id => @category, method: :post %>
+
+<table border="2">
+  <tr>
+    <td>Name</td>
+    <td><%= text_field_tag('updatedname', @category.name) %></td>
+  </tr>
+</table>
+
+<%= submit_tag 'Edit' %>
+
+<%= link_to 'Back', {:action => 'list'} %>

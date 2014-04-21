@@ -16,9 +16,13 @@ Rails.application.routes.draw do
 
   get 'category/create'
 
+  get 'category/new'
+
   get 'category/list'
 
   get 'category/update'
+
+  get 'category/edit'
 
   get 'category/destroy'
 
@@ -53,6 +57,10 @@ Rails.application.routes.draw do
   post 'team/create'
   post 'team/update'
   delete 'team/destroy'
+
+  post 'category/create'
+  post 'category/update'
+  delete 'category/destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
