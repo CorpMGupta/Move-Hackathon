@@ -1,2 +1,20 @@
 <h1>Judge#list</h1>
-<p>Find me in app/views/judge/list.html.erb</p>
+
+<% if @judges.blank? %>
+    <p>There are no judges currently in the system.</p>
+<% else %>
+    <p>These are the current judges in our system</p>
+    <table border="2">
+      <% @judges.each do |c| %>
+          <tr>
+            <td><%= c.name %></td>
+            <td><%= c.password %></td>
+            <td><%= link_to 'Show', {:action => 'show', :id => c.id} %></td>
+            <td><%= link_to 'Edit', {:action => 'edit', :id => c.id} %></td>
+            <td><%= link_to 'Delete', {:action => 'destroy', :id => c.id}, :confirm => 'Are you sure you want to delete this item?' %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+
+<p><%= link_to 'Create new judge', {:action => 'new' } %></p>

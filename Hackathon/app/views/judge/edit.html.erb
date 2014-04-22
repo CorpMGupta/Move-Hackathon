@@ -1,2 +1,20 @@
 <h1>Judge#edit</h1>
-<p>Find me in app/views/judge/edit.html.erb</p>
+
+<%= form_tag :action => 'update', :id => @judge, method: :post %>
+
+<table border="2">
+    <tr>
+        <td>Name</td>
+        <td><%= text_field_tag('updatedname', @judge.name) %></td>
+    </tr>
+  <tr>
+    <td>Password</td>
+    <td><%= password_field_tag('updatedpassword', '') %></td>
+  </tr>
+
+</table>
+
+<%= submit_tag 'Edit' %>
+
+<%= link_to 'Back', {:action => 'list'} %>
+
