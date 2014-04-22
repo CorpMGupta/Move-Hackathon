@@ -1,60 +1,43 @@
 Rails.application.routes.draw do
 
+  root :to => 'home#index'
+
+  get 'home/index'
+  get 'home/login'
+
   get 'rating/create'
-
   get 'rating/new'
-
   get 'rating/list'
-
   get 'rating/show'
-
   get 'rating/update'
-
   get 'rating/edit'
-
   get 'rating/destroy'
 
   get 'category/show'
-
   get 'category/create'
-
   get 'category/new'
-
   get 'category/list'
-
   get 'category/update'
-
   get 'category/edit'
-
   get 'category/destroy'
 
   get 'judge/create'
-
   get 'judge/destroy'
-
   get 'judge/edit'
-
   get 'judge/list'
-
   get 'judge/new'
-
   get 'judge/show'
-
   get 'judge/update'
 
   get 'team/list'
-
   get 'team/show'
-
   get 'team/edit'
-
   get 'team/update'
-
   get 'team/create'
-
   get 'team/new'
-
   get 'team/destroy'
+
+  post 'home/login'
 
   post 'team/create'
   post 'team/update'
