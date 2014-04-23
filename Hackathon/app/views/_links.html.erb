@@ -1,0 +1,15 @@
+<h3>Teams</h3>
+
+<% if @teams.nil? %>
+    <p>No teams</p>
+<% else %>
+    <table>
+      <% @teams.each do |c| %>
+          <tr>
+            <td><%= link_to c.name, {:id => c.id,
+                                     :controller => 'team',
+                                     :action => 'show'}  %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

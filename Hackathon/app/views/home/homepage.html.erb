@@ -1,0 +1,17 @@
+<table border="1" width="100%">
+
+    <tr>
+        <td width="10%">
+            <h2>Move Hackathon</h2>
+        </td>
+        <td width="90%" align="right">
+            <%= session[:user_id] %>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="10%"><%= render :partial => '/links', :object => @teams %></td>
+        <td width="90%"><%= render :partial => '/main' %></td>
+    </tr>
+
+</table>

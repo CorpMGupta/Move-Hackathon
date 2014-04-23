@@ -7,16 +7,25 @@ class HomeController < ApplicationController
 
   def login
 
-    @currentName = params[:name].to_s
+    @currentName = params[:username].to_s
     @currentPass = params[:password].to_s
 
-    @user = Judge.where('name = ? AND password = ?', @currentName, @currentPass.to_sha1())
+    @currentPass = @currentPass.to_sha1()
 
-    if @user.nil?
-      redirect_to home_index_url
-    else
-      redirect_to team_list_url
+    @users = Judge.all
+
+    @users.each do |rec|
+      if(rec.name.eql?(@currentName) && rec.password.eql?(@currentPass))
+        session[:user_id] = @currentName
+        redirect_to :action => 'homepage'
+      else
+        redirect_to home_index_url
+      end
     end
-
   end
+
+  def homepage
+    @teams = Team.all
+  end
+
 end

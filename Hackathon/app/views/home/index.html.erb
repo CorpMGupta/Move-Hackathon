@@ -1,13 +1,12 @@
 <h1>Move Hackathon</h1>
 
-<%= form_for :login, url:home_login_path  do |f| %>
+<%= form_tag :action => 'login', method: :post %>
 
     <p>User Name</p>
-    <p><%= f.text_field :name %></p>
+    <p><%= text_field_tag('username', '') %></p>
 
     <p>Password</p>
-    <p><%= f.password_field :password %></p>
+    <p><%= text_field_tag('password', '') %></p>
 
-    <%= f.submit 'Login' %>
+<%= submit_tag 'Login' %>
 
-<% end %>
