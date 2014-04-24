@@ -24,6 +24,11 @@ class HomeController < ApplicationController
     end
   end
 
+  def logout
+    session[:user_id] = nil
+    redirect_to :action => 'homepage'
+  end
+
   def homepage
     @teams = Team.all
   end

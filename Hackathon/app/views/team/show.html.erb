@@ -1,10 +1,52 @@
-<h1>Team#show</h1>
 
-<h1><%= @team.name %></h1>
-<hr />
-<p><%= @team.members %></p>
-<p><%= @team.description %></p>
-<p><%= @team.summary %></p>
-<p><%= @team.screenshot %></p>
 
-<%= link_to 'Back', {:action => 'list'} %>
+<% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team.errors.count, 'Error') %></h2>
+      <ul>
+        <% @team.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+
+<% else %>
+    <table border="1" width="100%">
+      <tr>
+        <td width="10%">
+          <h1>Team List</h1>
+        </td>
+        <td width="90%">
+          <% if session[:user_id].nil? %>
+              <%= link_to 'Login as Judge', {:controller => 'home', :action => 'login'} %>
+          <% else %>
+              'Logged in as judge:' <%= session[:user_id] %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td width="10%">
+          <%= render :partial => '/links', :object => @teams %>
+        </td>
+        <td width="90%">
+          <h1><%= @team.name %></h1>
+          <hr />
+          <p><%= @team.members %></p>
+          <p><%= @team.description %></p>
+          <p><%= @team.summary %></p>
+          <p><%= @team.screenshot %></p>
+        </td>
+      </tr>
+      <tr>
+        <td width="10%">
+          <% if !session[:user_id].nil? %>
+              <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
+          <% end %>
+        </td>
+        <td width="90%"></td>
+      </tr>
+    </table>
+
+<% end %>
+
+

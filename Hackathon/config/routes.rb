@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
 
-  root :to => 'home#index'
+  root :to => 'home#homepage'
 
   get 'home/index'
   get 'home/login'
   get 'home/homepage'
+  get 'home/logout'
 
   get 'rating/create'
   get 'rating/new'

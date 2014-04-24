@@ -1,5 +1,3 @@
-<h3>Teams</h3>
-
 <% if @teams.nil? %>
     <p>No teams</p>
 <% else %>
@@ -8,7 +6,7 @@
           <tr>
             <td><%= link_to c.name, {:id => c.id,
                                      :controller => 'team',
-                                     :action => 'show'}  %></td>
+                                     :action => 'show'} %></td>
           </tr>
       <% end %>
     </table>

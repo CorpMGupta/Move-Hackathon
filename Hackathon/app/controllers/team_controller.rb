@@ -4,23 +4,37 @@ class TeamController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
+
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
+    else
+      @teams = Team.all
+      @team = Team.find(params[:id])
+    end
   end
 
   def edit
-    @team = Team.find(params[:id])
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
+    else
+      @team = Team.find(params[:id])
+    end
   end
 
   def update
-    @team = Team.find(params[:id])
-    if @team.update_attributes( :name => params[:updatedname],
-                                :members => params[:updatedmembers],
-                                :description => params[:updateddesc],
-                                :summary => params[:updatedsummary],
-                                :screenshot => params[:updatedscreenshot])
-      redirect_to :action => 'show', :id => @team
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
     else
-      render :action => 'edit'
+    @team = Team.find(params[:id])
+      if @team.update_attributes( :name => params[:updatedname],
+                                  :members => params[:updatedmembers],
+                                  :description => params[:updateddesc],
+                                  :summary => params[:updatedsummary],
+                                  :screenshot => params[:updatedscreenshot])
+        redirect_to :action => 'show', :id => @team
+      else
+        render :action => 'edit'
+      end
     end
   end
 
@@ -37,9 +51,13 @@ class TeamController < ApplicationController
   end
 
   def destroy
-    @team = Team.find(params[:id])
-    @team.destroy
-    redirect_to :action => 'list'
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
+    else
+      @team = Team.find(params[:id])
+      @team.destroy
+      redirect_to :action => 'list'
+    end
   end
 
   private
