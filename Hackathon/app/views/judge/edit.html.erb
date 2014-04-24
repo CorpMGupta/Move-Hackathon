@@ -1,20 +1,33 @@
-<h1>Judge#edit</h1>
-
-<%= form_tag :action => 'update', :id => @judge, method: :post %>
-
-<table border="2">
-    <tr>
-        <td>Name</td>
-        <td><%= text_field_tag('updatedname', @judge.name) %></td>
-    </tr>
+<table border="1" width="100%">
   <tr>
-    <td>Password</td>
-    <td><%= password_field_tag('updatedpassword', '') %></td>
+    <td width="10%">
+      <h2>Edit Judge</h2>
+    </td>
+    <td width="90%" align="right">
+    </td>
   </tr>
+  <tr>
+    <td width="10%"><%= render :partial => '/adminlinks' %></td>
+    <td width="90%">
 
+        <%= form_tag :action => 'update', :id => @judge, method: :post %>
+
+        <table border="2">
+            <tr>
+                <td>Name</td>
+                <td><%= text_field_tag('updatedname', @judge.name) %></td>
+            </tr>
+          <tr>
+            <td>Password</td>
+            <td><%= password_field_tag('updatedpassword', '') %></td>
+          </tr>
+
+        </table>
+
+        <%= submit_tag 'Edit' %>
+
+        <%= link_to 'Back', {:action => 'list'} %>
+
+    </td>
+  </tr>
 </table>
-
-<%= submit_tag 'Edit' %>
-
-<%= link_to 'Back', {:action => 'list'} %>
-

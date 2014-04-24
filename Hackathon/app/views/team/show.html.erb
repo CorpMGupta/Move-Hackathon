@@ -20,7 +20,7 @@
           <% if session[:user_id].nil? %>
               <%= link_to 'Login as Judge', {:controller => 'home', :action => 'login'} %>
           <% else %>
-              'Logged in as judge:' <%= session[:user_id] %>
+              'Logged in as judge:' <%= session[:user_name] %>
           <% end %>
         </td>
       </tr>
@@ -31,10 +31,81 @@
         <td width="90%">
           <h1><%= @team.name %></h1>
           <hr />
-          <p><%= @team.members %></p>
-          <p><%= @team.description %></p>
-          <p><%= @team.summary %></p>
-          <p><%= @team.screenshot %></p>
+          <table border="1">
+            <tr>
+              <td>Members</td>
+              <td><%= @team.members %></td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td><%= @team.description %></td>
+            </tr>
+            <tr>
+              <td>Summary</td>
+              <td><%= @team.summary %></td>
+            </tr>
+            <tr>
+              <td>Current Rating(s)</td>
+              <td>
+                <% if @current_team_rating.blank? %>
+                    <p>Not Available</p>
+                <% else %>
+                    <table border="1">
+                      <tr>
+                        <th>Category 1</th><th>Category 2</th><th>Category 3</th><th>Category 4</th><th>Category 5</th><th>Comment</th><th>Judge (if any)</th>
+                      </tr>
+                    <% @ratings.each do |rec| %>
+                        <% if rec.tid.eql?(@team.id) %>
+                            <tr>
+                              <td><%= rec.cat1 %></td>
+                              <td><%= rec.cat2 %></td>
+                              <td><%= rec.cat3 %></td>
+                              <td><%= rec.cat4 %></td>
+                              <td><%= rec.cat5 %></td>
+                              <td><%= rec.comment %></td>
+                              <% Judge.all.each do |judge| %>
+                                <% if judge.id.eql?(rec.jid) %>
+                                  <td><%= judge.name %></td>
+                                <% end %>
+                              <% end %>
+                            </tr>
+                        <% end %>
+                      <% end %>
+                    </table>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>Rate Team</td>
+              <td>
+
+                <%= form_for :team_rating, url:rating_create_path  do |f| %>
+
+                    <p>Rate (1-worst to 5-best)</p>
+                    <p>Category 1 <%= f.radio_button :cat1, '1' %> <%= f.label :cat1, '1', :value => '1' %> <%= f.radio_button :cat1, '2' %> <%= f.label :cat1, '2', :value => '2' %> <%= f.radio_button :cat1, '3' %> <%= f.label :cat1, '3', :value => '3' %> <%= f.radio_button :cat1, '4' %> <%= f.label :cat1, '4', :value => '4' %> <%= f.radio_button :cat1, '5' %> <%= f.label :cat1, '5', :value => '5' %></p>
+                    <hr/>
+                    <p>Category 2 <%= f.radio_button :cat2, '1' %> <%= f.label :cat2, '1', :value => '1' %> <%= f.radio_button :cat2, '2' %> <%= f.label :cat2, '2', :value => '2' %> <%= f.radio_button :cat2, '3' %> <%= f.label :cat2, '3', :value => '3' %> <%= f.radio_button :cat2, '4' %> <%= f.label :cat2, '4', :value => '4' %> <%= f.radio_button :cat2, '5' %> <%= f.label :cat2, '5', :value => '5' %></p>
+                    <hr/>
+                    <p>Category 3 <%= f.radio_button :cat3, '1' %> <%= f.label :cat3, '1', :value => '1' %> <%= f.radio_button :cat3, '2' %> <%= f.label :cat3, '2', :value => '2' %> <%= f.radio_button :cat3, '3' %> <%= f.label :cat3, '3', :value => '3' %> <%= f.radio_button :cat3, '4' %> <%= f.label :cat3, '4', :value => '4' %> <%= f.radio_button :cat3, '5' %> <%= f.label :cat3, '5', :value => '5' %></p>
+                    <hr/>
+                    <p>Category 4 <%= f.radio_button :cat4, '1' %> <%= f.label :cat4, '1', :value => '1' %> <%= f.radio_button :cat4, '2' %> <%= f.label :cat4, '2', :value => '2' %> <%= f.radio_button :cat4, '3' %> <%= f.label :cat4, '3', :value => '3' %> <%= f.radio_button :cat4, '4' %> <%= f.label :cat4, '4', :value => '4' %> <%= f.radio_button :cat4, '5' %> <%= f.label :cat4, '5', :value => '5' %></p>
+                    <hr/>
+                    <p>Category 5 <%= f.radio_button :cat5, '1' %> <%= f.label :cat5, '1', :value => '1' %> <%= f.radio_button :cat5, '2' %> <%= f.label :cat5, '2', :value => '2' %> <%= f.radio_button :cat5, '3' %> <%= f.label :cat5, '3', :value => '3' %> <%= f.radio_button :cat5, '4' %> <%= f.label :cat5, '4', :value => '4' %> <%= f.radio_button :cat5, '5' %> <%= f.label :cat5, '5', :value => '5' %></p>
+                    <hr/>
+                    <p>Overall <%= f.radio_button :overall, '1' %> <%= f.label :overall, '1', :value => '1' %> <%= f.radio_button :overall, '2' %> <%= f.label :overall, '2', :value => '2' %> <%= f.radio_button :overall, '3' %> <%= f.label :overall, '3', :value => '3' %> <%= f.radio_button :overall, '4' %> <%= f.label :overall, '4', :value => '4' %> <%= f.radio_button :overall, '5' %> <%= f.label :overall, '5', :value => '5' %></p>
+                    <hr/>
+                    <p>Comment <%= f.text_area :comment %></p>
+                    <p><%= f.hidden_field :tid, { :value => @team.id} %></p>
+                    <% if !session[:user_id].nil? %>
+                        <p><%= f.hidden_field :jid, { :value => session[:user_id]} %></p>
+                    <% end %>
+                    <%= f.submit %>
+                <% end %>
+
+              </td>
+            </tr>
+
+          </table>
         </td>
       </tr>
       <tr>

@@ -6,9 +6,9 @@
         </td>
         <td width="90%" align="right">
           <% if session[:user_id].nil? %>
-              <%= link_to 'Login as Judge', {:controller => 'home', :action => 'login'} %>
+              <%= link_to 'Login as Judge', {:controller => 'home', :action => 'index'} %>
           <% else %>
-              Logged in as judge: <%= session[:user_id] %>
+              Logged in as judge: <%= session[:user_name] %>
           <% end %>
         </td>
     </tr>

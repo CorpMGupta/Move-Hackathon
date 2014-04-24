@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'home/login'
   get 'home/homepage'
+  get 'home/adminpage'
   get 'home/logout'
 
   get 'rating/create'
@@ -52,6 +53,10 @@ Rails.application.routes.draw do
   post 'judge/create'
   post 'judge/update'
   delete 'judge/destroy'
+
+  post 'rating/create'
+  post 'rating/update'
+  delete 'rating/destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

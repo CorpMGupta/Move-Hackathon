@@ -1,24 +1,38 @@
-<h1>Team#new</h1>
+<table border="1" width="100%">
+  <tr>
+    <td width="10%">
+      <h2>New Team</h2>
+    </td>
+    <td width="90%" align="right">
+    </td>
+  </tr>
+  <tr>
+    <td width="10%"><%= render :partial => '/adminlinks' %></td>
+    <td width="90%">
+        
+        <%= form_for :team, url:team_create_path  do |f| %>
 
-<%= form_for :team, url:team_create_path  do |f| %>
+            <p>Name</p>
+            <p><%= f.text_field :name %></p>
 
-    <p>Name</p>
-    <p><%= f.text_field :name %></p>
+            <p>Members</p>
+            <p><%= f.text_area :members %></p>
 
-    <p>Members</p>
-    <p><%= f.text_area :members %></p>
+            <p>Description</p>
+            <p><%= f.text_area :description %></p>
 
-    <p>Description</p>
-    <p><%= f.text_area :description %></p>
+            <p>Summary</p>
+            <p><%= f.text_area :summary %></p>
 
-    <p>Summary</p>
-    <p><%= f.text_area :summary %></p>
+            <p>Screenshot(s) Url</p>
+            <p><%= f.text_area :screenshot %></p>
 
-    <p>Screenshot(s) Url</p>
-    <p><%= f.text_area :screenshot %></p>
+            <%= f.submit %>
 
-    <%= f.submit %>
+        <% end %>
 
-<% end %>
+        <%= link_to 'Back', {:action => 'list'} %>
 
-<%= link_to 'Back', {:action => 'list'} %>
+    </td>
+  </tr>
+</table>

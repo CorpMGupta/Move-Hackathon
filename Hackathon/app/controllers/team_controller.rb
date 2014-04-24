@@ -10,7 +10,10 @@ class TeamController < ApplicationController
     else
       @teams = Team.all
       @team = Team.find(params[:id])
+      @ratings = Rating.all
+      @current_team_rating = Rating.find_by_tid(params[:id])
     end
+
   end
 
   def edit
