@@ -22,6 +22,7 @@ class HomeController < ApplicationController
     end
 
     if(session[:user_id].nil?)
+      flash[:message] = 'Invalid username and password.'
       redirect_to home_index_url
     else
       redirect_to home_homepage_url

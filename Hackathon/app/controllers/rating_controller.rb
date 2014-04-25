@@ -1,7 +1,12 @@
 class RatingController < ApplicationController
   def create
     @rating = Rating.new(rating_params)
-    @rating.save
+    if(@rating.save)
+      flash[:message] = 'Rating successfully saved.'
+    else
+      flash[:message] = 'Rating not saved.'
+    end
+    session[:user_show] = true
     redirect_to :controller => 'team', :action => 'show'
   end
 
@@ -9,6 +14,7 @@ class RatingController < ApplicationController
   end
 
   def list
+    @ratings = Rating.all
   end
 
   def show
@@ -21,6 +27,13 @@ class RatingController < ApplicationController
   end
 
   def destroy
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
+    else
+      @rating = Rating.find(params[:id])
+      @rating.destroy
+      redirect_to :action => 'list'
+    end
   end
 
   private

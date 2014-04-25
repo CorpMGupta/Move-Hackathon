@@ -1,11 +1,18 @@
 class CategoryController < ApplicationController
   def create
     @category = Category.new(category_params)
-    if @category.save
+
+    if(Category.all.length.eql?(5))
+      flash[:message] = 'Categories cannot exceed 5.'
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+        if @category.save
+          redirect_to :action => 'list'
+        else
+          redirect_to :action => 'new'
+        end
     end
+
   end
 
   def new
@@ -16,22 +23,34 @@ class CategoryController < ApplicationController
   end
 
   def update
-    @category = Category.find(params[:id])
-    if @category.update_attributes( :name => params[:updatedname])
-      redirect_to :action => 'list'
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
     else
-      render :action => 'edit'
+      @category = Category.find(params[:id])
+      if @category.update_attributes( :name => params[:updatedname])
+        redirect_to :action => 'list'
+      else
+        redirect_to :action => 'edit'
+      end
     end
   end
 
   def edit
-    @category = Category.find(params[:id])
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
+    else
+      @category = Category.find(params[:id])
+    end
   end
 
   def destroy
-    @category = Category.find(params[:id])
-    @category.destroy
-    redirect_to :action => 'list'
+    if(params[:id].nil?)
+      redirect_to home_homepage_url
+    else
+        @category = Category.find(params[:id])
+        @category.destroy
+        redirect_to :action => 'list'
+    end
   end
 
   private

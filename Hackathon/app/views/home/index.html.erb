@@ -2,6 +2,10 @@
 
 <%= form_tag :action => 'login', method: :post %>
 
+    <%= flash[:message] %>
+
+    <% flash[:message] = '' %>
+
     <p>User Name</p>
     <p><%= text_field_tag('username', '') %></p>
 

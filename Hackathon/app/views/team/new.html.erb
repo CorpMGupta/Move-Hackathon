@@ -9,7 +9,7 @@
   <tr>
     <td width="10%"><%= render :partial => '/adminlinks' %></td>
     <td width="90%">
-        
+
         <%= form_for :team, url:team_create_path  do |f| %>
 
             <p>Name</p>
@@ -23,9 +23,6 @@
 
             <p>Summary</p>
             <p><%= f.text_area :summary %></p>
-
-            <p>Screenshot(s) Url</p>
-            <p><%= f.text_area :screenshot %></p>
 
             <%= f.submit %>
 

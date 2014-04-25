@@ -4,6 +4,8 @@
       <h2>Category List</h2>
     </td>
     <td width="90%" align="right">
+      <%= flash[:message] %>
+      <% flash[:message] = '' %>
     </td>
   </tr>
   <tr>
@@ -13,7 +15,7 @@
     <% if @categories.blank? %>
         <p>There are no categories currently in the system.</p>
     <% else %>
-        <p>These are the current categories in our system</p>
+        <p>These are the current categories in our system.</p>
         <table border="2">
           <% @categories.each do |c| %>
               <tr>

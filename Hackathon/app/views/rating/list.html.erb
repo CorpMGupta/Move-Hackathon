@@ -1,2 +1,38 @@
-<h1>Rating#list</h1>
-<p>Find me in app/views/rating/list.html.erb</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="10%">
+      <h2>Ratings List</h2>
+    </td>
+    <td width="90%" align="right">
+    </td>
+  </tr>
+  <tr>
+    <td width="10%"><%= render :partial => '/adminlinks' %></td>
+    <td width="90%">
+
+      <% if @ratings.blank? %>
+          <p>There are no ratings currently in the system.</p>
+      <% else %>
+          <p>These are the current ratings available in our system.</p>
+          <table border="2">
+                <tr>
+                    <td>Team #ID</td><td>Category 1</td><td>Category 2</td><td>Category 3</td><td>Category 4</td><td>Category 5</td><td>Comments</td><td>Delete</td>
+                </tr>
+
+            <% @ratings.each do |c| %>
+                <tr>
+                  <td><%= c.tid %></td>
+                  <td><%= c.cat1 %></td>
+                  <td><%= c.cat2 %></td>
+                  <td><%= c.cat3 %></td>
+                  <td><%= c.cat4 %></td>
+                  <td><%= c.cat5 %></td>
+                  <td><%= c.comment %></td>
+                  <td><%= link_to 'Delete', {:action => 'destroy', :id => c.id}, :confirm => 'Are you sure you want to delete this item?' %></td>
+                </tr>
+            <% end %>
+          </table>
+      <% end %>
+    </td>
+  </tr>
+</table>
