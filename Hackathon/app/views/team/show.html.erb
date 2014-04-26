@@ -11,8 +11,17 @@
     </div>
 
 <% else %>
-    <p><%= flash[:message] %></p>
-    <% flash[:message] = '' %>
+
+    <% if session[:insert] %>
+        <script>alert('Rating successfully saved.')</script>
+        <% session[:insert] = false %>
+    <% end %>
+
+    <% if session[:modify] %>
+        <script>alert('Rating successfully modified.')</script>
+        <% session[:modify] = false %>
+    <% end %>
+
     <table border="1" width="100%">
       <tr>
         <td width="10%">
@@ -20,7 +29,7 @@
         </td>
         <td width="90%">
           <% if session[:user_id].nil? %>
-              <%= link_to 'Login as Judge', {:controller => 'home', :action => 'login'} %>
+              <%= link_to 'Login as Judge', {:controller => 'home', :action => 'index'} %>
           <% else %>
               'Logged in as judge:' <%= session[:user_name] %>
           <% end %>
@@ -54,20 +63,53 @@
                     <p>Not Available</p>
                 <% else %>
                     <% if @show_judge_report %>
-                        <table border="1">
+                        <table class="judge" border="1">
                       <tr>
-                        <th>Category 1</th><th>Category 2</th><th>Category 3</th><th>Category 4</th><th>Category 5</th><th>Overall</th><th>Comment</th><th>Judge (if any)</th>
+
+                        <% if !Category.first.nil? %>
+                            <th>Category 1 (<%= Category.first.name %>)</th>
+                        <% end %>
+
+                        <% if !Category.second.nil? %>
+                            <th>Category 2 (<%= Category.second.name %>)</th>
+                        <% end %>
+
+                        <% if !Category.third.nil? %>
+                            <th>Category 3 (<%= Category.third.name %>)</th>
+                        <% end %>
+
+                        <% if !Category.fourth.nil? %>
+                            <th>Category 4 (<%= Category.fourth.name %>)</th>
+                        <% end %>
+
+                        <% if !Category.fifth.nil? %>
+                            <th>Category 5 (<%= Category.fifth.name %>)</th>
+                        <% end %>
+
+                        <th>Overall</th>
+                        <th>Comment</th>
+                        <th>Judge (if any)</th>
+
                       </tr>
                     <% @ratings.each do |rec| %>
                         <% if rec.tid.eql?(@team.id) && !rec.jid.nil? %>
                             <tr>
-                              <td><%= rec.cat1 %></td>
-                              <td><%= rec.cat2 %></td>
-                              <td><%= rec.cat3 %></td>
-                              <td><%= rec.cat4 %></td>
-                              <td><%= rec.cat5 %></td>
+                              <% if !Category.first.nil? %>
+                                <td><%= rec.cat1 %></td>
+                              <% end %>
+                              <% if !Category.second.nil? %>
+                                <td><%= rec.cat2 %></td>
+                              <% end %>
+                              <% if !Category.third.nil? %>
+                                <td><%= rec.cat3 %></td>
+                              <% end %>
+                              <% if !Category.fourth.nil? %>
+                                <td><%= rec.cat4 %></td>
+                              <% end %>
+                              <% if !Category.fifth.nil? %>
+                                <td><%= rec.cat5 %></td>
+                              <% end %>
                               <td><%= rec.overall %></td>
-
                               <% if !session[:user_id].nil? %>
                                 <td><%= rec.comment %></td>
                               <% else %>
@@ -96,11 +138,27 @@
                     <p>Not Available</p>
                 <% else %>
                     <% if @show_crowd_report %>
-                        <table border="1">
+                        <table class="anonymous" border="1">
                       <tr>
-                        <th>Category 1</th><th>Category 2</th><th>Category 3</th><th>Category 4</th><th>Category 5</th><th>Overall</th>
+                        <% if !Category.first.nil? %>
+                            <th>Category 1 (<%= Category.first.name %>)</th>
+                        <% end %>
+                        <% if !Category.second.nil? %>
+                            <th>Category 2 (<%= Category.second.name %>)</th>
+                        <% end %>
+                        <% if !Category.third.nil? %>
+                            <th>Category 3 (<%= Category.third.name %>)</th>
+                        <% end %>
+                        <% if !Category.fourth.nil? %>
+                            <th>Category 4 (<%= Category.fourth.name %>)</th>
+                        <% end %>
+                        <% if !Category.fifth.nil? %>
+                            <th>Category 5 (<%= Category.fifth.name %>)</th>
+                        <% end %>
+                        <th>Overall</th>
                       </tr>
                       <tr>
+                        <% if !Category.first.nil? %>
                         <td>
                           <% if !@cat1users.eql?(0) %>
                             <%= @cat1rating/@cat1users %>
@@ -108,7 +166,9 @@
                             Not Available
                           <% end %>
                         </td>
+                        <% end %>
 
+                        <% if !Category.second.nil? %>
                         <td>
                           <% if !@cat2users.eql?(0) %>
                             <%= @cat2rating/@cat2users %>
@@ -116,7 +176,9 @@
                               Not Available
                           <% end %>
                         </td>
+                        <% end %>
 
+                        <% if !Category.third.nil? %>
                         <td>
                           <% if !@cat3users.eql?(0) %>
                             <%= @cat3rating/@cat3users %>
@@ -124,7 +186,9 @@
                               Not Available
                           <% end %>
                         </td>
+                        <% end %>
 
+                        <% if !Category.fourth.nil? %>
                         <td>
                           <% if !@cat4users.eql?(0) %>
                             <%= @cat4rating/@cat4users %>
@@ -132,7 +196,9 @@
                               Not Available
                           <% end %>
                         </td>
+                        <% end %>
 
+                        <% if !Category.fifth.nil? %>
                         <td>
                           <% if !@cat5users.eql?(0) %>
                             <%= @cat5rating/@cat5users %>
@@ -140,6 +206,7 @@
                               Not Available
                           <% end %>
                         </td>
+                        <% end %>
 
                         <td>
                           <% if !@overallusers.eql?(0) %>
@@ -166,27 +233,27 @@
 
                     <p>Rate (1-worst to 5-best)</p>
 
-                    <% if !Category.first.name.nil? %>
+                    <% if !Category.first.nil? %>
                         <p>Category 1 (<%= Category.first.name %>) <%= f.radio_button :cat1, '1' %> <%= f.label :cat1, '1', :value => '1' %> <%= f.radio_button :cat1, '2' %> <%= f.label :cat1, '2', :value => '2' %> <%= f.radio_button :cat1, '3' %> <%= f.label :cat1, '3', :value => '3' %> <%= f.radio_button :cat1, '4' %> <%= f.label :cat1, '4', :value => '4' %> <%= f.radio_button :cat1, '5' %> <%= f.label :cat1, '5', :value => '5' %></p>
                         <hr/>
                     <% end %>
 
-                    <% if !Category.second.name.nil? %>
+                    <% if !Category.second.nil? %>
                         <p>Category 2 (<%= Category.second.name %>) <%= f.radio_button :cat2, '1' %> <%= f.label :cat2, '1', :value => '1' %> <%= f.radio_button :cat2, '2' %> <%= f.label :cat2, '2', :value => '2' %> <%= f.radio_button :cat2, '3' %> <%= f.label :cat2, '3', :value => '3' %> <%= f.radio_button :cat2, '4' %> <%= f.label :cat2, '4', :value => '4' %> <%= f.radio_button :cat2, '5' %> <%= f.label :cat2, '5', :value => '5' %></p>
                         <hr/>
                     <% end %>
 
-                    <% if !Category.third.name.nil? %>
+                    <% if !Category.third.nil? %>
                         <p>Category 3 (<%= Category.third.name %>) <%= f.radio_button :cat3, '1' %> <%= f.label :cat3, '1', :value => '1' %> <%= f.radio_button :cat3, '2' %> <%= f.label :cat3, '2', :value => '2' %> <%= f.radio_button :cat3, '3' %> <%= f.label :cat3, '3', :value => '3' %> <%= f.radio_button :cat3, '4' %> <%= f.label :cat3, '4', :value => '4' %> <%= f.radio_button :cat3, '5' %> <%= f.label :cat3, '5', :value => '5' %></p>
                         <hr/>
                     <% end %>
 
-                    <% if !Category.fourth.name.nil? %>
+                    <% if !Category.fourth.nil? %>
                         <p>Category 4 (<%= Category.fourth.name %>) <%= f.radio_button :cat4, '1' %> <%= f.label :cat4, '1', :value => '1' %> <%= f.radio_button :cat4, '2' %> <%= f.label :cat4, '2', :value => '2' %> <%= f.radio_button :cat4, '3' %> <%= f.label :cat4, '3', :value => '3' %> <%= f.radio_button :cat4, '4' %> <%= f.label :cat4, '4', :value => '4' %> <%= f.radio_button :cat4, '5' %> <%= f.label :cat4, '5', :value => '5' %></p>
                         <hr/>
                     <% end %>
 
-                    <% if !Category.fifth.name.nil? %>
+                    <% if !Category.fifth.nil? %>
                         <p>Category 5 (<%= Category.fifth.name %>) <%= f.radio_button :cat5, '1' %> <%= f.label :cat5, '1', :value => '1' %> <%= f.radio_button :cat5, '2' %> <%= f.label :cat5, '2', :value => '2' %> <%= f.radio_button :cat5, '3' %> <%= f.label :cat5, '3', :value => '3' %> <%= f.radio_button :cat5, '4' %> <%= f.label :cat5, '4', :value => '4' %> <%= f.radio_button :cat5, '5' %> <%= f.label :cat5, '5', :value => '5' %></p>
                         <hr/>
                     <% end %>
@@ -199,6 +266,9 @@
                     <% end %>
 
                     <p><%= f.hidden_field :tid, { :value => @team.id} %></p>
+
+                    <% session[:team_id] = @team.id %>
+
                     <% if !session[:user_id].nil? %>
                         <p><%= f.hidden_field :jid, { :value => session[:user_id]} %></p>
                     <% end %>

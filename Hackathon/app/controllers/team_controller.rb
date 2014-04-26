@@ -11,16 +11,21 @@ class TeamController < ApplicationController
       @teams = Team.all
 
       if(params[:id].nil?)
-        @id = Team.first.id
-        @team = Team.find(@id)
-        @current_team_rating = Rating.find_by_tid(@id)
+        if session[:team_id].nil?
+          @id = Team.first.id
+          @team = Team.find(@id)
+          @current_team_rating = Rating.find_by_tid(@id)
+        else
+          @id = session[:team_id]
+          @team = Team.find(@id)
+          @current_team_rating = Rating.find_by_tid(@id)
+        end
       else
         @team = Team.find(params[:id])
         @current_team_rating = Rating.find_by_tid(params[:id])
       end
 
       @ratings = Rating.all
-
 
       @show_judge_report = false
       @show_crowd_report = false

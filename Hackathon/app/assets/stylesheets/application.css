@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+
+.anonymous th {
+    background-color: lightblue;
+}
+
+.judge th {
+    background-color: lightblue;
+}
+
+.report th {
+    background-color: lightblue;
+}
+
+.report th .current {
+    padding-right: 20px;
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.report th .asc {
+    background-image: url(/assets/up-arrow.gif);
+}
+
+.report th .desc {
+    background-image: url(/assets/down-arrow.gif);
+}

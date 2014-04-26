@@ -1,0 +1,201 @@
+<table border="1" width="100%">
+    <tr>
+      <td width="10%">
+        <h1>Team Report</h1>
+      </td>
+      <td width="90%">
+        Logged in as judge: <%= session[:user_name] %>
+      </td>
+    </tr>
+
+    <tr>
+    <td width="10%">
+      <%= render :partial => '/links', :object => @teams %>
+    </td>
+    <td width="90%">
+
+    <table class="report" border="1">
+    <% if !@sortedteams.blank? %>
+    <tr>
+        <th><%= sortable "name" %></th>
+        <th>Members</th>
+        <th>Description</th>
+        <th>Summary</th>
+    </tr>
+        <% @sortedteams.each do |rec| %>
+        <tr>
+
+          <td>
+            <%= rec.name %>
+          </td>
+
+          <td>
+          <% if !rec.members.nil? %>
+            <%= rec.members %>
+          <% else %>
+            <%= '-' %>
+          <% end %>
+          </td>
+
+          <td>
+            <% if !rec.description.nil? %>
+                <%= rec.description %>
+            <% else %>
+                <%= '-' %>
+            <% end %>
+          </td>
+
+          <td>
+            <% if !rec.summary.nil? %>
+                <%= rec.summary %>
+            <% else %>
+                <%= '-' %>
+            <% end %>
+          </td>
+
+        </tr>
+        <% end %>
+
+    <% else %>
+    <tr>
+        <td>Team(s) report unavailable.</td>
+    </tr>
+    <% end %>
+    </table>
+
+    <hr/>
+
+    <p><b>Judges Ratings - Averaged out</b></p>
+
+    <table class="judge" border="1">
+      <tr>
+
+        <% if !Category.first.nil? %>
+            <th>Category 1 (<%= Category.first.name %>)</th>
+        <% end %>
+
+        <% if !Category.second.nil? %>
+            <th>Category 2 (<%= Category.second.name %>)</th>
+        <% end %>
+
+        <% if !Category.third.nil? %>
+            <th>Category 3 (<%= Category.third.name %>)</th>
+        <% end %>
+
+        <% if !Category.fourth.nil? %>
+            <th>Category 4 (<%= Category.fourth.name %>)</th>
+        <% end %>
+
+        <% if !Category.fifth.nil? %>
+            <th>Category 5 (<%= Category.fifth.name %>)</th>
+        <% end %>
+
+        <th>Overall</th>
+        <th>Comment</th>
+
+      </tr>
+
+      <tr>
+        <% if !Category.first.nil? %>
+            <td>
+              <% if !@cat1users.eql?(0) %>
+                  <%= @cat1rating/@cat1users %>
+              <% else %>
+                  Not Available
+              <% end %>
+            </td>
+        <% end %>
+
+        <% if !Category.second.nil? %>
+            <td>
+              <% if !@cat2users.eql?(0) %>
+                  <%= @cat2rating/@cat2users %>
+              <% else %>
+                  Not Available
+              <% end %>
+            </td>
+        <% end %>
+
+        <% if !Category.third.nil? %>
+            <td>
+              <% if !@cat3users.eql?(0) %>
+                  <%= @cat3rating/@cat3users %>
+              <% else %>
+                  Not Available
+              <% end %>
+            </td>
+        <% end %>
+
+        <% if !Category.fourth.nil? %>
+            <td>
+              <% if !@cat4users.eql?(0) %>
+                  <%= @cat4rating/@cat4users %>
+              <% else %>
+                  Not Available
+              <% end %>
+            </td>
+        <% end %>
+
+        <% if !Category.fifth.nil? %>
+            <td>
+              <% if !@cat5users.eql?(0) %>
+                  <%= @cat5rating/@cat5users %>
+              <% else %>
+                  Not Available
+              <% end %>
+            </td>
+        <% end %>
+
+        <td>
+          <% if !@overallusers.eql?(0) %>
+              <%= @overallrating/@overallusers %>
+          <% else %>
+              Not Available
+          <% end %>
+        </td>
+        <td>
+          <table class="judge" border="1">
+            <tr>
+              <th>Team</th><th>Judge</th><th>Comments</th>
+            </tr>
+
+            <% @teams.each do |t| %>
+            <tr>
+              <td>
+                <%= t.name %>
+              </td>
+              <td colspan="2">
+                <table border="1">
+                  <% @ratings.each do |r| %>
+                    <% if t.id.eql?(r.tid) %>
+                        <% if !r.jid.nil? && !r.comment.nil? %>
+                          <tr>
+                            <td><%= Judge.all.find(r.jid).name %></td>
+                            <td><%= r.comment %></td>
+                          </tr>
+                        <% end %>
+                    <% end %>
+                  <% end %>
+                </table>
+              </td>
+            </tr>
+            <% end %>
+          </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+    </tr>
+
+    <tr>
+    <td width="10%">
+      <% if !session[:user_id].nil? %>
+          <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
+      <% end %>
+    </td>
+    <td width="90%"></td>
+    </tr>
+</table>
+
+
+

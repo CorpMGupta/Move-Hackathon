@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'rating/create'
   get 'rating/new'
   get 'rating/list'
+  get 'rating/report'
   get 'rating/show'
   get 'rating/update'
   get 'rating/edit'

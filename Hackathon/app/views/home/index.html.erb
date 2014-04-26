@@ -2,9 +2,10 @@
 
 <%= form_tag :action => 'login', method: :post %>
 
-    <%= flash[:message] %>
-
-    <% flash[:message] = '' %>
+    <% if session[:authfail].eql?(true) %>
+        <script>alert('Invalid username or password.')</script>
+        <% session[:authfail] = false %>
+    <% end %>
 
     <p>User Name</p>
     <p><%= text_field_tag('username', '') %></p>
