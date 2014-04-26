@@ -1,17 +1,28 @@
-<h1>Move Hackathon</h1>
+<table border="1" width="100%">
+  <tr>
+    <td>
+      <img src="/assets/Move-header.jpg" style="margin-top: 25px;" width="50%" height="50%" />
+      <h2>Hackathon</h2>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= form_tag :action => 'login', method: :post %>
 
-<%= form_tag :action => 'login', method: :post %>
+      <% if session[:authfail].eql?(true) %>
+          <script>alert('Invalid username or password.')</script>
+          <% session[:authfail] = false %>
+      <% end %>
 
-    <% if session[:authfail].eql?(true) %>
-        <script>alert('Invalid username or password.')</script>
-        <% session[:authfail] = false %>
-    <% end %>
+          <p>User Name</p>
+          <p><%= text_field_tag('username', '') %></p>
 
-    <p>User Name</p>
-    <p><%= text_field_tag('username', '') %></p>
+          <p>Password</p>
+          <p><%= password_field_tag('password', '') %></p>
 
-    <p>Password</p>
-    <p><%= password_field_tag('password', '') %></p>
+      <%= submit_tag 'Login' %>
+    </td>
+  </tr>
+</table>
 
-<%= submit_tag 'Login' %>
 
