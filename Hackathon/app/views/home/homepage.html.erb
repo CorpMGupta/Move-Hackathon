@@ -1,29 +1,58 @@
-<table border="1" width="100%">
+<table border="0" width="100%">
 
     <tr>
         <td width="10%">
-            <img src="/assets/Move-header.jpg" style="margin-top: 25px;" width="100%" height="75%" />
-            <h2>Hackathon</h2>
-        </td>
-        <td width="90%">
-          <% if session[:user_id].nil? %>
-              <%= link_to 'Login as Judge', {:controller => 'home', :action => 'index'} %>
-          <% else %>
-              Logged in as judge: <%= session[:user_name] %>
-          <% end %>
-        </td>
-    </tr>
+            <img src="/assets/logo.png" />
 
-    <tr>
-        <td width="10%"><%= render :partial => '/links', :object => @teams %></td>
-    </tr>
+        </td>
+      <td class="judge"><table border="0" cellpadding="0" cellspacing="0"><tr><td>
+        <% if session[:user_id].nil? %>
+            <%= link_to 'Login as Judge', {:controller => 'home', :action => 'index'} %>
+        <% else %>
+            <img src="/assets/Login_icon.png" style="padding-left: 15px;" alt="Logged in as judge <%= session[:user_name] %>" title="Logged in as judge <%= session[:user_name] %>" />
+        <% end %>
+      </td>
+      </tr>
+        <% if !session[:user_id].nil? %>
+            <tr>
+              <td>
+                <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
+              </td>
 
-  <% if !session[:user_id].nil? %>
-    <tr>
-      <td>
-        <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
+            </tr>
+        <% end %>
+      </table>
       </td>
     </tr>
-  <% end %>
+</table>
+<table width="100%" border="1" cellpadding="0" cellspacing="0">
+    <tr style="background-color: #ffffff; height: 500px;">
+  <td width="15%" style="background-color: #dcdee1" valign="top"><%= render :partial => '/links', :object => @teams %>
+
+    <% if !session[:user_id].nil? %>
+        <table width="100%" style="margin-top: 50px; border-top: 3px solid #313845;">
+          <tr style="width: 100%; background-color: #ffffff;">
+            <td  style="background-color: #999999; color:#ffffff;">
+              <%= link_to 'Team Report', :controller => 'rating', :action => 'report'  %>
+            </td>
+
+          </tr>
+        </table>
+    <% end %>
+  </td>
+  <td width="80%"></td>
+</tr>
+ <tr>
+    <td>
+
+    </td>
+ </tr>
+
 
 </table>
+
+
+
+
+</table>
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #313845; height: 30px; width:100%;"></table>

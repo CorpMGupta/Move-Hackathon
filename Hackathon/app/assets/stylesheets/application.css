@@ -15,15 +15,18 @@
  */
 
 .anonymous th {
-    background-color: lightblue;
+    background-color: #67ad45;
+    color:#FFFFFF;
 }
 
-.judge th {
-    background-color: lightblue;
+.judge_t th {
+    background-color: #67ad45;
+    color:#FFFFFF;
 }
 
 .report th {
-    background-color: lightblue;
+    background-color: #67ad45;
+    color:#FFFFFF;
 }
 
 .report th .current {
@@ -54,3 +57,43 @@
 {
     background: url(/assets/Fill.gif) no-repeat right top;
 }
+body{ background-color: #313845; margin: 0; padding: 0; border: 0; color: #ffffff; font-family: Arial; font-size: 14px;}
+#hkt_login {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    background-color: none;
+}
+.logo{ width:40%; float:left; border-right:1px solid #FFFFFF; text-align:center; padding:50px 10px 50px 10px;}
+.login_details{width:45%; float:left; margin-left:20px; color:#FFFFFF; font-family:Verdana; font-size:12px;}
+p input{width:95%;}
+
+.main{ width:100%; border:1px solid #313845;}
+.header{width:100%; height:85px; background-color:#313845;}
+.header img{ padding:5px 15px;}
+.content{ width:100%; height:600px;}
+.left_cont{width:15%; background-color:#dfe1e7;}
+.left_cont table{ margin-top:30px;}
+.left_cont tr{ border-bottom:1px solid #FFFFFF; height:25px; background-color:#525b68; color:#FFFFFF; font-family:Arial; font-size:13px; padding:5px;}
+.left_cont tr td{ padding:8px 15px; font-weight:bold;}
+.selected{ background-color:#67ad45;}
+.judge{float:right; padding:10px 15px; }
+.judge_img{ vertical-align: middle; padding-left: 3px;}
+.right_cont{ width:80%;}
+.footer{width:100%; height:30px; background-color:#313845;}
+
+table tr td a:link{ font-size: 14px;  padding: 5px; color: #ffffff; font-weight: bold;}
+table tr td a:hover, table tr td a:visited{ color:#ffffff;}
+
+hr{display: block;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    border-style: inset;
+    border-width: 2px;
+    border-top-width: 2px;}

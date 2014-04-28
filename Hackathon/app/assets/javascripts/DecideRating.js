@@ -1,4 +1,4 @@
-function DecideRating(option, categoryParam, mode) {
+function DecideRating(option, categoryParam) {
     var temp = "";
     var currentImg = '';
 
@@ -18,9 +18,11 @@ function DecideRating(option, categoryParam, mode) {
         case 'cat5':
             currentImg = '5';
             break;
+        case 'overall':
+            currentImg = '6';
+            break;
     }
 
-    if(mode == 1 || mode == 2) {
         if (option == 1) {
             document.getElementById('Rating1' + currentImg).className = "Filled";
             document.getElementById('Rating2' + currentImg).className = "Empty";
@@ -62,11 +64,8 @@ function DecideRating(option, categoryParam, mode) {
             document.getElementById('Rating5' + currentImg).className = "Filled";
             temp = "5";
         }
-    }
 
-    if(mode == 2) {
         $("#" + categoryParam).val(temp);
-    }
 
     return true;
 }

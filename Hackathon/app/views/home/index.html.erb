@@ -1,12 +1,10 @@
-<table border="1" width="100%">
+<table id="hkt_login">
   <tr>
-    <td>
-      <img src="/assets/Move-header.jpg" style="margin-top: 25px;" width="50%" height="50%" />
-      <h2>Hackathon</h2>
+    <td class="logo">
+      <img src="/assets/logo.png"/>
+
     </td>
-  </tr>
-  <tr>
-    <td>
+    <td class="login_details">
       <%= form_tag :action => 'login', method: :post %>
 
       <% if session[:authfail].eql?(true) %>
@@ -14,15 +12,16 @@
           <% session[:authfail] = false %>
       <% end %>
 
-          <p>User Name</p>
-          <p><%= text_field_tag('username', '') %></p>
+      <p>User Name</p>
+      <p class="input"><%= text_field_tag('username', '') %></p>
 
-          <p>Password</p>
-          <p><%= password_field_tag('password', '') %></p>
+      <p>Password</p>
+      <p><%= password_field_tag('password', '') %></p>
 
       <%= submit_tag 'Login' %>
     </td>
   </tr>
+
 </table>
 
 

@@ -1,14 +1,15 @@
 <% if @teams.nil? %>
     <p>No teams</p>
 <% else %>
-    <table>
+    <table width="100%" style="float:left;">
       <% @teams.each do |c| %>
           <tr>
-            <td><%= link_to c.name, {:id => c.id,
+            <td class="selected" width="100%"><%= link_to c.name, {:id => c.id,
                                      :controller => 'team',
                                      :action => 'show'} %></td>
           </tr>
       <% end %>
+
 
     </table>
 <% end %>

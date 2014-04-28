@@ -1,24 +1,51 @@
-<table border="1" width="100%">
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tr>
       <td width="10%">
-        <img src="/assets/Move-header.jpg" style="margin-top: 25px;" width="100%" height="75%" />
-        <h3>Team Report</h3>
+        <img src="/assets/logo.png" />
       </td>
-      <td width="90%">
-        Logged in as judge: <%= session[:user_name] %>
+      <td class="judge"><table border="0" cellpadding="0" cellspacing="0"><tr><td>
+        <% if session[:user_id].nil? %>
+            <%= link_to 'Login as Judge', {:controller => 'home', :action => 'index'} %>
+        <% else %>
+            <img src="/assets/Login_icon.png" style="padding-left: 15px;" alt="Logged in as judge <%= session[:user_name] %>" title="Logged in as judge <%= session[:user_name] %>" />
+        <% end %>
+      </td>
+        </tr>
+        <% if !session[:user_id].nil? %>
+            <tr>
+              <td>
+                <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
+              </td>
+
+            </tr>
+        <% end %>
+        </table>
       </td>
     </tr>
-
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
-    <td width="10%">
+    <td width="15%" valign="top" style="background-color: #ffffff; height: 500px;">
       <%= render :partial => '/links', :object => @teams %>
+      <% if !session[:user_id].nil? %>
+          <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 10px; border-top: 3px solid #313845;">
+            <br>
+            <tr>
+
+              <td style="background-color: #999999; color:#ffffff;">
+                <%= link_to 'Team Report', :controller => 'rating', :action => 'report'  %>
+              </td>
+
+            </tr>
+          </table>
+      <% end %>
     </td>
 
-    <td width="90%">
+    <td width="85%" style="background-color: #ffffff; color:#313845;">
     <table>
     <tr>
     <td>
-    <table class="report" border="1">
+    <table class="report" border="1" cellspacing="0" cellpadding="10">
     <% if !@sortedteams.blank? %>
     <tr>
         <th><%= sortable "name" %></th>
@@ -71,9 +98,8 @@
 
     <p><b>Judges Ratings - Averaged out</b></p>
 
-    <table class="judge" border="1">
-      <tr>
-          <table border="1">
+
+          <table border="1" class="judge_t" cellspacing="0" cellpadding="0">
             <th>Team</th>
 
             <% if !Category.first.nil? %>
@@ -107,32 +133,34 @@
                       <% if trec.id.eql?(rec.tid) %>
                           <% if !rec.jid.nil? %>
 
-                              <% if !rec.cat1.nil? %>
+                              <% session[:currentRecord] = rec.tid %>
+
+                              <% if !rec.cat1.blank? %>
                                   <% @cat1rating = @cat1rating + rec.cat1.to_i %>
                                   <% @cat1users = @cat1users + 1 %>
                               <% end %>
 
-                              <% if !rec.cat2.nil? %>
+                              <% if !rec.cat2.blank? %>
                                   <% @cat2rating = @cat2rating + rec.cat2.to_i %>
                                   <% @cat2users = @cat2users + 1 %>
                               <% end %>
 
-                              <% if !rec.cat3.nil? %>
+                              <% if !rec.cat3.blank? %>
                                   <% @cat3rating = @cat3rating + rec.cat3.to_i %>
                                   <% @cat3users = @cat3users + 1 %>
                               <% end %>
 
-                              <% if !rec.cat4.nil? %>
+                              <% if !rec.cat4.blank? %>
                                   <% @cat4rating = @cat4rating + rec.cat4.to_i %>
                                   <% @cat4users = @cat4users + 1 %>
                               <% end %>
 
-                              <% if !rec.cat5.nil? %>
+                              <% if !rec.cat5.blank? %>
                                   <% @cat5rating = @cat5rating + rec.cat5.to_i %>
                                   <% @cat5users = @cat5users + 1 %>
                               <% end %>
 
-                              <% if !rec.overall.nil? %>
+                              <% if !rec.overall.blank? %>
                                   <% @overallrating = @overallrating + rec.overall.to_i %>
                                   <% @overallusers = @overallusers + 1 %>
                               <% end %>
@@ -202,49 +230,42 @@
                   <% @cat1rating = @cat2rating = @cat3rating = @cat4rating = @cat5rating = @overallrating = 0 %>
                   <% @cat1users = @cat2users = @cat3users = @cat4users = @cat5users = @overallusers = 0 %>
 
+                  <% if !session[:currentRecord].nil? %>
                   <td>
-                    <table border="1">
+                    <table border="1" cellpadding="10" cellspacing="0">
                       <tr>
-                        <th>Team</th><th>Judge</th><th>Comments</th>
+                        <th>Judge</th><th>Comments</th>
                       </tr>
 
-                      <% @teams.each do |t| %>
-                          <tr>
-                            <td>
-                              <%= t.name %>
-                            </td>
-                            <td colspan="2">
-                              <table border="1">
-                                <% @ratings.each do |r| %>
-                                    <% if t.id.eql?(r.tid) %>
-                                        <% if !r.jid.nil? && !r.comment.nil? %>
-                                            <tr>
-                                              <td><%= Judge.all.find(r.jid).name %></td>
-                                              <td><%= r.comment %></td>
-                                            </tr>
-                                        <% end %>
-                                    <% end %>
-                                <% end %>
-                              </table>
-                            </td>
-                          </tr>
+                      <% Rating.all.each do |f| %>
+                          <% if f.tid.eql?(session[:currentRecord]) %>
+                              <% if !f.jid.nil? %>
+                              <tr>
+                                <td><%= Judge.all.find(f.jid).name %></td>
+                                <td><%= f.comment %></td>
+                              </tr>
+                              <% end %>
+                          <% end %>
                       <% end %>
+
+                      <% session[:currentRecord] = nil %>
+
                     </table>
                   </td>
-
+                  <% else %>
+                        Not Available
+                  <% end %>
                 </tr>
             <% end %>
           </table>
-      </tr>
-    </table>
+
 
     <hr/>
 
     <p><b>Crowd Ratings - Averaged out</b></p>
 
-    <table border="1">
-        <tr>
-        <table border="1">
+
+        <table border="1" class="judge_t" cellpadding="0" cellspacing="0">
         <th>Team</th>
 
         <% if !Category.first.nil? %>
@@ -276,32 +297,32 @@
                   <% if trec.id.eql?(rec.tid) %>
                       <% if rec.jid.nil? %>
 
-                          <% if !rec.cat1.nil? %>
+                          <% if !rec.cat1.blank? %>
                               <% @cat1rating = @cat1rating + rec.cat1.to_i %>
                               <% @cat1users = @cat1users + 1 %>
                           <% end %>
 
-                          <% if !rec.cat2.nil? %>
+                          <% if !rec.cat2.blank? %>
                               <% @cat2rating = @cat2rating + rec.cat2.to_i %>
                               <% @cat2users = @cat2users + 1 %>
                           <% end %>
 
-                          <% if !rec.cat3.nil? %>
+                          <% if !rec.cat3.blank? %>
                               <% @cat3rating = @cat3rating + rec.cat3.to_i %>
                               <% @cat3users = @cat3users + 1 %>
                           <% end %>
 
-                          <% if !rec.cat4.nil? %>
+                          <% if !rec.cat4.blank? %>
                               <% @cat4rating = @cat4rating + rec.cat4.to_i %>
                               <% @cat4users = @cat4users + 1 %>
                           <% end %>
 
-                          <% if !rec.cat5.nil? %>
+                          <% if !rec.cat5.blank? %>
                               <% @cat5rating = @cat5rating + rec.cat5.to_i %>
                               <% @cat5users = @cat5users + 1 %>
                           <% end %>
 
-                          <% if !rec.overall.nil? %>
+                          <% if !rec.overall.blank? %>
                               <% @overallrating = @overallrating + rec.overall.to_i %>
                               <% @overallusers = @overallusers + 1 %>
                           <% end %>
@@ -373,8 +394,7 @@
             </tr>
         <% end %>
         </table>
-        </tr>
-    </table>
+
 
     </td>
     </tr>
@@ -382,26 +402,12 @@
     </td>
     </tr>
 
-    <% if !session[:user_id].nil? %>
-    <tr>
-      <td width="10%">
-        <%= link_to 'Team Report', :controller => 'rating', :action => 'report'  %>
-      </td>
-      <td width="90%">
-      </td>
-    </tr>
-    <% end %>
 
-    <% if !session[:user_id].nil? %>
-        <tr>
-          <td width="10%">
-            <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
-          </td>
-          <td width="90%"></td>
-        </tr>
-    <% end %>
+
+
 
 </table>
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #313845; height: 30px; width:100%;"></table>
 
 
 
