@@ -18,4 +18,12 @@
         <td width="10%"><%= render :partial => '/links', :object => @teams %></td>
     </tr>
 
+  <% if !session[:user_id].nil? %>
+    <tr>
+      <td>
+        <%= link_to 'Logout', {:controller => 'home', :action => 'logout'} %>
+      </td>
+    </tr>
+  <% end %>
+
 </table>

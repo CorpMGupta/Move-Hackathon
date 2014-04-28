@@ -25,6 +25,30 @@ class RatingController < ApplicationController
             params[:team_rating][:comment] = f.comment
           end
 
+          if params[:team_rating][:cat1].blank?
+            params[:team_rating][:cat1] = f.cat1
+          end
+
+          if params[:team_rating][:cat2].blank?
+            params[:team_rating][:cat2] = f.cat2
+          end
+
+          if params[:team_rating][:cat3].blank?
+            params[:team_rating][:cat3] = f.cat3
+          end
+
+          if params[:team_rating][:cat4].blank?
+            params[:team_rating][:cat4] = f.cat4
+          end
+
+          if params[:team_rating][:cat5].blank?
+            params[:team_rating][:cat5] = f.cat5
+          end
+
+          if params[:team_rating][:overall].blank?
+            params[:team_rating][:overall] = f.overall
+          end
+
           if f.update(rating_params)
             session[:modify] = true
             chkInsert = true
@@ -52,6 +76,7 @@ class RatingController < ApplicationController
   end
 
   def report
+
     @ratings = Rating.all
     @teams = Team.all
     @sortedteams = Team.order(sort_column + " " + sort_direction)
@@ -73,45 +98,6 @@ class RatingController < ApplicationController
 
     @overallrating = 0
     @overallusers = 0
-
-    Team.all.each do |trec|
-    Rating.all.each do |rec|
-      if trec.id.eql?(rec.tid)
-        if !rec.jid.nil?
-
-          if !rec.cat1.nil?
-            @cat1rating = @cat1rating + rec.cat1.to_i
-            @cat1users = @cat1users + 1
-          end
-
-          if !rec.cat2.nil?
-            @cat2rating = @cat2rating + rec.cat2.to_i
-            @cat2users = @cat2users + 1
-          end
-
-          if !rec.cat3.nil?
-            @cat3rating = @cat3rating + rec.cat3.to_i
-            @cat3users = @cat3users + 1
-          end
-
-          if !rec.cat4.nil?
-            @cat4rating = @cat4rating + rec.cat4.to_i
-            @cat4users = @cat4users + 1
-          end
-
-          if !rec.cat5.nil?
-            @cat5rating = @cat5rating + rec.cat5.to_i
-            @cat5users = @cat5users + 1
-          end
-
-          if !rec.overall.nil?
-            @overallrating = @overallrating + rec.overall.to_i
-            @overallusers = @overallusers + 1
-          end
-        end
-      end
-      end
-    end
 
   end
 

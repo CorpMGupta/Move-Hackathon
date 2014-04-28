@@ -39,3 +39,18 @@
 .report th .desc {
     background-image: url(/assets/down-arrow.gif);
 }
+
+.Empty
+{
+    background: url(/assets/Empty.gif) no-repeat right top;
+}
+
+.Empty:hover
+{
+    background: url(/assets/Fill.gif) no-repeat right top;
+}
+
+.Filled
+{
+    background: url(/assets/Fill.gif) no-repeat right top;
+}

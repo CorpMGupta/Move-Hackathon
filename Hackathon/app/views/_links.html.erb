@@ -9,10 +9,6 @@
                                      :action => 'show'} %></td>
           </tr>
       <% end %>
-      <% if !session[:user_id].nil? %>
-        <tr>
-          <td><%= link_to 'Team Report', :controller => 'rating', :action => 'report'  %></td>
-        </tr>
-      <% end %>
+
     </table>
 <% end %>
