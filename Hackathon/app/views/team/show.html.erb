@@ -49,7 +49,7 @@
     </table>
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td width="15%" valign="top" style="background-color: #ffffff; height: 500px;">
+        <td width="15%" valign="top" style="background-color: #ffffff; height: 200px; overflow-y: scroll !important;">
           <%= render :partial => '/links', :object => @teams %>
           <% if !session[:user_id].nil? %>
         <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 10px; border-top: 3px solid #313845;">
@@ -90,34 +90,41 @@
                         <table class="judge_t" border="1" cellspacing="0" cellpadding="5">
                       <tr>
 
+                        <th>Judge</th>
+
                         <% if !Category.first.nil? %>
-                            <th>Category 1 (<%= Category.first.name %>)</th>
+                            <th><%= Category.first.name %></th>
                         <% end %>
 
                         <% if !Category.second.nil? %>
-                            <th>Category 2 (<%= Category.second.name %>)</th>
+                            <th><%= Category.second.name %></th>
                         <% end %>
 
                         <% if !Category.third.nil? %>
-                            <th>Category 3 (<%= Category.third.name %>)</th>
+                            <th><%= Category.third.name %></th>
                         <% end %>
 
                         <% if !Category.fourth.nil? %>
-                            <th>Category 4 (<%= Category.fourth.name %>)</th>
+                            <th><%= Category.fourth.name %></th>
                         <% end %>
 
                         <% if !Category.fifth.nil? %>
-                            <th>Category 5 (<%= Category.fifth.name %>)</th>
+                            <th><%= Category.fifth.name %></th>
                         <% end %>
 
                         <th>Overall</th>
-                        <th>Comment</th>
-                        <th>Judge</th>
 
                       </tr>
                     <% @ratings.each do |rec| %>
                         <% if rec.tid.eql?(@team.id) && !rec.jid.nil? %>
                             <tr>
+
+                              <% Judge.all.each do |judge| %>
+                                  <% if judge.id.eql?(rec.jid) %>
+                                      <td><%= judge.name %></td>
+                                  <% end %>
+                              <% end %>
+
                               <% if !Category.first.nil? %>
                                 <td><%= rec.cat1 %></td>
                               <% end %>
@@ -134,17 +141,7 @@
                                 <td><%= rec.cat5 %></td>
                               <% end %>
                               <td><%= rec.overall %></td>
-                              <% if !session[:user_id].nil? %>
-                                <td><%= rec.comment %></td>
-                              <% else %>
-                                <td>Not available</td>
-                              <% end %>
 
-                              <% Judge.all.each do |judge| %>
-                                <% if judge.id.eql?(rec.jid) %>
-                                  <td><%= judge.name %></td>
-                                <% end %>
-                              <% end %>
                             </tr>
                         <% end %>
                       <% end %>
@@ -156,7 +153,7 @@
               </td>
             </tr>
             <tr>
-              <td>Anonymous Rating(s) - Averaged out</td>
+              <td>Average cloud rating</td>
               <td>
                 <% if @current_team_rating.blank? %>
                     <p>Not Available</p>
@@ -165,19 +162,19 @@
                         <table class="anonymous" border="1" cellpadding="5" cellspacing="0">
                       <tr>
                         <% if !Category.first.nil? %>
-                            <th>Category 1 (<%= Category.first.name %>)</th>
+                            <th><%= Category.first.name %></th>
                         <% end %>
                         <% if !Category.second.nil? %>
-                            <th>Category 2 (<%= Category.second.name %>)</th>
+                            <th><%= Category.second.name %></th>
                         <% end %>
                         <% if !Category.third.nil? %>
-                            <th>Category 3 (<%= Category.third.name %>)</th>
+                            <th><%= Category.third.name %></th>
                         <% end %>
                         <% if !Category.fourth.nil? %>
-                            <th>Category 4 (<%= Category.fourth.name %>)</th>
+                            <th><%= Category.fourth.name %></th>
                         <% end %>
                         <% if !Category.fifth.nil? %>
-                            <th>Category 5 (<%= Category.fifth.name %>)</th>
+                            <th><%= Category.fifth.name %></th>
                         <% end %>
                         <th>Overall</th>
                       </tr>
@@ -185,7 +182,7 @@
                         <% if !Category.first.nil? %>
                         <td>
                           <% if !@cat1users.eql?(0) %>
-                            <%= @cat1rating/@cat1users %>
+                            <%= number_with_precision(@cat1rating/@cat1users, precision: 2) %>
                           <% else %>
                             Not Available
                           <% end %>
@@ -195,7 +192,7 @@
                         <% if !Category.second.nil? %>
                         <td>
                           <% if !@cat2users.eql?(0) %>
-                            <%= @cat2rating/@cat2users %>
+                            <%= number_with_precision(@cat2rating/@cat2users, precision: 2) %>
                           <% else %>
                               Not Available
                           <% end %>
@@ -205,7 +202,7 @@
                         <% if !Category.third.nil? %>
                         <td>
                           <% if !@cat3users.eql?(0) %>
-                            <%= @cat3rating/@cat3users %>
+                            <%= number_with_precision(@cat3rating/@cat3users, precision: 2) %>
                           <% else %>
                               Not Available
                           <% end %>
@@ -215,7 +212,7 @@
                         <% if !Category.fourth.nil? %>
                         <td>
                           <% if !@cat4users.eql?(0) %>
-                            <%= @cat4rating/@cat4users %>
+                            <%= number_with_precision(@cat4rating/@cat4users, precision: 2) %>
                           <% else %>
                               Not Available
                           <% end %>
@@ -225,7 +222,7 @@
                         <% if !Category.fifth.nil? %>
                         <td>
                           <% if !@cat5users.eql?(0) %>
-                            <%= @cat5rating/@cat5users %>
+                            <%= number_with_precision(@cat5rating/@cat5users, precision: 2) %>
                           <% else %>
                               Not Available
                           <% end %>
@@ -234,7 +231,7 @@
 
                         <td>
                           <% if !@overallusers.eql?(0) %>
-                            <%= @overallrating/@overallusers %>
+                            <%= number_with_precision(@overallrating/@overallusers, precision: 2) %>
                           <% else %>
                               Not Available
                           <% end %>
@@ -259,52 +256,46 @@
 
                     <% if !Category.first.nil? %>
                         <p><%= f.hidden_field :cat1, :id => 'cat1' %></p>
-                        <p>Category 1 (<%= Category.first.name %>) <img id="Rating11" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat1');" /> <img id="Rating21" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'cat1');" /> <img id="Rating31" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat1');" /> <img id="Rating41" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat1');" /> <img id="Rating51" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat1');" /></p>
-                        <hr/>
+                        <p style="width:18%; float: left;"><%= Category.first.name %> </p> <p style="width:81%;float: left;"><img id="Rating11" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat1');" /> <img id="Rating21" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'cat1');" /> <img id="Rating31" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat1');" /> <img id="Rating41" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat1');" /> <img id="Rating51" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat1');" /></p>
                     <% end %>
 
                     <% if !Category.second.nil? %>
                         <p><%= f.hidden_field :cat2, :id => 'cat2'  %></p>
-                        <p>Category 2 (<%= Category.second.name %>) <img id="Rating12"
+                        <p style="width:18%; float: left;"><%= Category.second.name %> </p> <p style="width:81%;float: left;"><img id="Rating12"
                                                                          class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat2');" /> <img id="Rating22" class="Empty" width="20px"
                                                                                                                     height="20px" onclick="DecideRating(2, 'cat2');" /> <img id="Rating32" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat2');" /> <img
                         id="Rating42" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat2');" /> <img id="Rating52" class="Empty"
                                                                                          width="20px" height="20px" onclick="DecideRating(5, 'cat2');" /></p>
-                        <hr/>
                     <% end %>
 
                     <% if !Category.third.nil? %>
                         <p><%= f.hidden_field :cat3, :id => 'cat3' %></p>
-                        <p>Category 3 (<%= Category.third.name %>) <img id="Rating13"
+                        <p style="width:18%; float: left;"><%= Category.third.name %> </p> <p style="width:81%;float: left;"><img id="Rating13"
                                                                         class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat3');" /> <img id="Rating23" class="Empty" width="20px"
                                                                                                                    height="20px" onclick="DecideRating(2,
                                 'cat3');" /> <img id="Rating33" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat3');" /> <img
                         id="Rating43" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat3');" /> <img id="Rating53" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat3');" /></p>
-                        <hr/>
                     <% end %>
 
                     <% if !Category.fourth.nil? %>
                         <p><%= f.hidden_field :cat4, :id => 'cat4' %></p>
-                        <p>Category 4 (<%= Category.fourth.name %>) <img id="Rating14"
+                        <p style="width:18%; float: left;"><%= Category.fourth.name %> </p> <p style="width:81%;float: left;"><img id="Rating14"
                                                                          class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat4');" /> <img id="Rating24" class="Empty" width="20px"
                                                                                                                     height="20px" onclick="DecideRating(2, 'cat4');" /> <img id="Rating34" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat4');" /> <img
                         id="Rating44" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat4');" /> <img id="Rating54" class="Empty"
                                                                                          width="20px" height="20px" onclick="DecideRating(5, 'cat4');" /></p>
-                        <hr/>
                     <% end %>
 
                     <% if !Category.fifth.nil? %>
                         <p><%= f.hidden_field :cat5, :id => 'cat5' %></p>
-                        <p>Category 5 (<%= Category.fifth.name %>) <img id="Rating15" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat5');" /> <img id="Rating25" class="Empty" width="20px" height="20px" onclick="DecideRating(2,'cat5');" /> <img id="Rating35" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat5');" /> <img id="Rating45" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat5');" /> <img id="Rating55" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat5');" /></p>
-                        <hr/>
+                        <p style="width:18%; float: left;"><%= Category.fifth.name %></p><p style="width:81%;float: left;"><img id="Rating15" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat5');" /> <img id="Rating25" class="Empty" width="20px" height="20px" onclick="DecideRating(2,'cat5');" /> <img id="Rating35" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat5');" /> <img id="Rating45" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat5');" /> <img id="Rating55" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat5');" /></p>
                     <% end %>
 
                     <p><%= f.hidden_field :overall, :id => 'overall' %></p>
-                    <p>Overall <img id="Rating16" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'overall');" /> <img id="Rating26" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'overall');" /> <img id="Rating36" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'overall');" /> <img id="Rating46" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'overall');" /> <img id="Rating56" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'overall');" /></p>
-                    <hr/>
+                    <p style="width:18%; float: left;">Overall</p> <p style="width:81%;float: left;"><img id="Rating16" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'overall');" /> <img id="Rating26" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'overall');" /> <img id="Rating36" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'overall');" /> <img id="Rating46" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'overall');" /> <img id="Rating56" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'overall');" /></p>
 
                     <% if !session[:user_id].nil? %>
-                        <p>Comment <%= f.text_area :comment %></p>
+                        <p style="width: 18%; float: left; padding-top: 20px;">Comment</p><p style="width:81%;float: left; vertical-align: middle;"><%= f.text_area :comment, :id => "comments_area" %></p>
                     <% end %>
 
                     <p><%= f.hidden_field :tid, { :value => @team.id} %></p>
@@ -314,10 +305,30 @@
                     <% if !session[:user_id].nil? %>
                         <p><%= f.hidden_field :jid, { :value => session[:user_id]} %></p>
                     <% end %>
+
                     <%= f.submit %>
                 <% end %>
 
               </td>
+            </tr>
+            <tr>
+              <td>Comments</td>
+              <% if !session[:user_id].nil? %>
+              <td>
+                <table border="1" cellspacing="0" cellpadding="0">
+                <% Rating.all.each do |f| %>
+                  <% if f.tid.eql?(@team.id) && !f.jid.nil? %>
+                      <tr>
+                        <td><%= Judge.all.find(f.jid).name %></td>
+                        <td><%= f.comment %></td>
+                      </tr>
+                  <% end %>
+                <% end %>
+                </table>
+              </td>
+              <% else %>
+              <td>Not Available</td>
+              <% end %>
             </tr>
           </table>
         </td>

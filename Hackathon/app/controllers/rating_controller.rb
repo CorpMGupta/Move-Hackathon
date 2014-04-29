@@ -76,29 +76,31 @@ class RatingController < ApplicationController
   end
 
   def report
+    if !session[:user_id].nil?
+      @ratings = Rating.all
+      @teams = Team.all
+      @sortedteams = Team.order(sort_column + " " + sort_direction)
 
-    @ratings = Rating.all
-    @teams = Team.all
-    @sortedteams = Team.order(sort_column + " " + sort_direction)
+      @cat1rating = 0.0
+      @cat1users = 0
 
-    @cat1rating = 0
-    @cat1users = 0
+      @cat2rating = 0.0
+      @cat2users = 0
 
-    @cat2rating = 0
-    @cat2users = 0
+      @cat3rating = 0.0
+      @cat3users = 0
 
-    @cat3rating = 0
-    @cat3users = 0
+      @cat4rating = 0.0
+      @cat4users = 0
 
-    @cat4rating = 0
-    @cat4users = 0
+      @cat5rating = 0.0
+      @cat5users = 0
 
-    @cat5rating = 0
-    @cat5users = 0
-
-    @overallrating = 0
-    @overallusers = 0
-
+      @overallrating = 0.0
+      @overallusers = 0
+    else
+      redirect_to home_homepage_url
+    end
   end
 
   def show

@@ -1,7 +1,10 @@
+
+<div style="height:auto;min-height:400px !important; overflow-y:auto; float:left; width:100%;">
 <% if @teams.nil? %>
     <p>No teams</p>
 <% else %>
-    <table width="100%" style="float:left;">
+    <table width="100%" style="float:left; overflow-y: scroll;">
+      <tr><td style="background-color: #313845;">Team List</td></tr>
       <% @teams.each do |c| %>
           <tr>
             <td class="selected" width="100%"><%= link_to c.name, {:id => c.id,
@@ -13,3 +16,4 @@
 
     </table>
 <% end %>
+</div>

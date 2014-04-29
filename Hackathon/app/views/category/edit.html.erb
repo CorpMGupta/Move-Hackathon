@@ -1,15 +1,14 @@
 <table border="1" width="100%">
   <tr>
-    <td width="10%">
+    <td width="15%">
       <h2>Edit Category</h2>
     </td>
-    <td width="90%" align="right">
+    <td width="85%" align="right">
     </td>
   </tr>
   <tr>
-    <td width="10%"><%= render :partial => '/adminlinks' %></td>
-    <td width="90%">
-
+    <td width="15%" valign="top"><%= render :partial => '/adminlinks' %></td>
+    <td width="85%" style="padding-left: 20px;">
         <%= form_tag :action => 'update', :id => @category, method: :post %>
 
         <table border="2">

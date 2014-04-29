@@ -45,7 +45,7 @@
     <table>
     <tr>
     <td>
-    <table class="report" border="1" cellspacing="0" cellpadding="10">
+    <table class="report" border="1" cellspacing="0" cellpadding="5">
     <% if !@sortedteams.blank? %>
     <tr>
         <th><%= sortable "name" %></th>
@@ -61,7 +61,7 @@
           </td>
 
           <td>
-          <% if !rec.members.nil? %>
+          <% if !rec.members.blank? %>
             <%= rec.members %>
           <% else %>
             <%= '-' %>
@@ -69,7 +69,7 @@
           </td>
 
           <td>
-            <% if !rec.description.nil? %>
+            <% if !rec.description.blank? %>
                 <%= rec.description %>
             <% else %>
                 <%= '-' %>
@@ -77,7 +77,7 @@
           </td>
 
           <td>
-            <% if !rec.summary.nil? %>
+            <% if !rec.summary.blank? %>
                 <%= rec.summary %>
             <% else %>
                 <%= '-' %>
@@ -93,33 +93,30 @@
     </tr>
     <% end %>
     </table>
-
     <hr/>
-
     <p><b>Judges Ratings - Averaged out</b></p>
 
-
-          <table border="1" class="judge_t" cellspacing="0" cellpadding="0">
+          <table border="1" class="judge_t" cellspacing="0" cellpadding="5">
             <th>Team</th>
 
             <% if !Category.first.nil? %>
-                <th>Category 1 (<%= Category.first.name %>)</th>
+                <th><%= Category.first.name %></th>
             <% end %>
 
             <% if !Category.second.nil? %>
-                <th>Category 2 (<%= Category.second.name %>)</th>
+                <th><%= Category.second.name %></th>
             <% end %>
 
             <% if !Category.third.nil? %>
-                <th>Category 3 (<%= Category.third.name %>)</th>
+                <th><%= Category.third.name %></th>
             <% end %>
 
             <% if !Category.fourth.nil? %>
-                <th>Category 4 (<%= Category.fourth.name %>)</th>
+                <th><%= Category.fourth.name %></th>
             <% end %>
 
             <% if !Category.fifth.nil? %>
-                <th>Category 5 (<%= Category.fifth.name %>)</th>
+                <th><%= Category.fifth.name %></th>
             <% end %>
 
             <th>Overall</th>
@@ -136,32 +133,32 @@
                               <% session[:currentRecord] = rec.tid %>
 
                               <% if !rec.cat1.blank? %>
-                                  <% @cat1rating = @cat1rating + rec.cat1.to_i %>
+                                  <% @cat1rating = @cat1rating + rec.cat1.to_f %>
                                   <% @cat1users = @cat1users + 1 %>
                               <% end %>
 
                               <% if !rec.cat2.blank? %>
-                                  <% @cat2rating = @cat2rating + rec.cat2.to_i %>
+                                  <% @cat2rating = @cat2rating + rec.cat2.to_f %>
                                   <% @cat2users = @cat2users + 1 %>
                               <% end %>
 
                               <% if !rec.cat3.blank? %>
-                                  <% @cat3rating = @cat3rating + rec.cat3.to_i %>
+                                  <% @cat3rating = @cat3rating + rec.cat3.to_f %>
                                   <% @cat3users = @cat3users + 1 %>
                               <% end %>
 
                               <% if !rec.cat4.blank? %>
-                                  <% @cat4rating = @cat4rating + rec.cat4.to_i %>
+                                  <% @cat4rating = @cat4rating + rec.cat4.to_f %>
                                   <% @cat4users = @cat4users + 1 %>
                               <% end %>
 
                               <% if !rec.cat5.blank? %>
-                                  <% @cat5rating = @cat5rating + rec.cat5.to_i %>
+                                  <% @cat5rating = @cat5rating + rec.cat5.to_f %>
                                   <% @cat5users = @cat5users + 1 %>
                               <% end %>
 
                               <% if !rec.overall.blank? %>
-                                  <% @overallrating = @overallrating + rec.overall.to_i %>
+                                  <% @overallrating = @overallrating + rec.overall.to_f %>
                                   <% @overallusers = @overallusers + 1 %>
                               <% end %>
 
@@ -172,7 +169,7 @@
                   <% if !Category.first.nil? %>
                       <td>
                         <% if !@cat1users.eql?(0) %>
-                            <%= @cat1rating/@cat1users %>
+                            <%= number_with_precision(@cat1rating/@cat1users, precision: 2) %>
                         <% else %>
                             Not Available
                         <% end %>
@@ -182,7 +179,7 @@
                   <% if !Category.second.nil? %>
                       <td>
                         <% if !@cat2users.eql?(0) %>
-                            <%= @cat2rating/@cat2users %>
+                            <%= number_with_precision(@cat2rating/@cat2users, precision: 2) %>
                         <% else %>
                             Not Available
                         <% end %>
@@ -192,7 +189,7 @@
                   <% if !Category.third.nil? %>
                       <td>
                         <% if !@cat3users.eql?(0) %>
-                            <%= @cat3rating/@cat3users %>
+                            <%= number_with_precision(@cat3rating/@cat3users, precision: 2) %>
                         <% else %>
                             Not Available
                         <% end %>
@@ -202,7 +199,7 @@
                   <% if !Category.fourth.nil? %>
                       <td>
                         <% if !@cat4users.eql?(0) %>
-                            <%= @cat4rating/@cat4users %>
+                            <%= number_with_precision(@cat4rating/@cat4users, precision: 2) %>
                         <% else %>
                             Not Available
                         <% end %>
@@ -212,7 +209,7 @@
                   <% if !Category.fifth.nil? %>
                       <td>
                         <% if !@cat5users.eql?(0) %>
-                            <%= @cat5rating/@cat5users %>
+                            <%= number_with_precision(@cat5rating/@cat5users, precision: 2) %>
                         <% else %>
                             Not Available
                         <% end %>
@@ -221,7 +218,7 @@
 
                   <td>
                     <% if !@overallusers.eql?(0) %>
-                        <%= @overallrating/@overallusers %>
+                        <%= number_with_precision(@overallrating/@overallusers, precision: 2) %>
                     <% else %>
                         Not Available
                     <% end %>
@@ -253,39 +250,37 @@
                     </table>
                   </td>
                   <% else %>
-                        Not Available
+                    <td>Not Available</td>
                   <% end %>
                 </tr>
             <% end %>
           </table>
-
-
     <hr/>
 
     <p><b>Crowd Ratings - Averaged out</b></p>
 
 
-        <table border="1" class="judge_t" cellpadding="0" cellspacing="0">
+        <table border="1" class="judge_t" cellpadding="5" cellspacing="0">
         <th>Team</th>
 
         <% if !Category.first.nil? %>
-            <th>Category 1 (<%= Category.first.name %>)</th>
+            <th><%= Category.first.name %></th>
         <% end %>
 
         <% if !Category.second.nil? %>
-            <th>Category 2 (<%= Category.second.name %>)</th>
+            <th><%= Category.second.name %></th>
         <% end %>
 
         <% if !Category.third.nil? %>
-            <th>Category 3 (<%= Category.third.name %>)</th>
+            <th><%= Category.third.name %></th>
         <% end %>
 
         <% if !Category.fourth.nil? %>
-            <th>Category 4 (<%= Category.fourth.name %>)</th>
+            <th><%= Category.fourth.name %></th>
         <% end %>
 
         <% if !Category.fifth.nil? %>
-            <th>Category 5 (<%= Category.fifth.name %>)</th>
+            <th><%= Category.fifth.name %></th>
         <% end %>
 
         <th>Overall</th>
@@ -298,32 +293,32 @@
                       <% if rec.jid.nil? %>
 
                           <% if !rec.cat1.blank? %>
-                              <% @cat1rating = @cat1rating + rec.cat1.to_i %>
+                              <% @cat1rating = @cat1rating + rec.cat1.to_f %>
                               <% @cat1users = @cat1users + 1 %>
                           <% end %>
 
                           <% if !rec.cat2.blank? %>
-                              <% @cat2rating = @cat2rating + rec.cat2.to_i %>
+                              <% @cat2rating = @cat2rating + rec.cat2.to_f %>
                               <% @cat2users = @cat2users + 1 %>
                           <% end %>
 
                           <% if !rec.cat3.blank? %>
-                              <% @cat3rating = @cat3rating + rec.cat3.to_i %>
+                              <% @cat3rating = @cat3rating + rec.cat3.to_f %>
                               <% @cat3users = @cat3users + 1 %>
                           <% end %>
 
                           <% if !rec.cat4.blank? %>
-                              <% @cat4rating = @cat4rating + rec.cat4.to_i %>
+                              <% @cat4rating = @cat4rating + rec.cat4.to_f %>
                               <% @cat4users = @cat4users + 1 %>
                           <% end %>
 
                           <% if !rec.cat5.blank? %>
-                              <% @cat5rating = @cat5rating + rec.cat5.to_i %>
+                              <% @cat5rating = @cat5rating + rec.cat5.to_f %>
                               <% @cat5users = @cat5users + 1 %>
                           <% end %>
 
                           <% if !rec.overall.blank? %>
-                              <% @overallrating = @overallrating + rec.overall.to_i %>
+                              <% @overallrating = @overallrating + rec.overall.to_f %>
                               <% @overallusers = @overallusers + 1 %>
                           <% end %>
 
@@ -334,7 +329,7 @@
               <% if !Category.first.nil? %>
                   <td>
                     <% if !@cat1users.eql?(0) %>
-                        <%= @cat1rating/@cat1users %>
+                        <%= number_with_precision(@cat1rating/@cat1users, precision: 2) %>
                     <% else %>
                         Not Available
                     <% end %>
@@ -344,7 +339,7 @@
               <% if !Category.second.nil? %>
                   <td>
                     <% if !@cat2users.eql?(0) %>
-                        <%= @cat2rating/@cat2users %>
+                        <%= number_with_precision(@cat2rating/@cat2users, precision: 2) %>
                     <% else %>
                         Not Available
                     <% end %>
@@ -354,7 +349,7 @@
               <% if !Category.third.nil? %>
                   <td>
                     <% if !@cat3users.eql?(0) %>
-                        <%= @cat3rating/@cat3users %>
+                        <%= number_with_precision(@cat3rating/@cat3users, precision: 2) %>
                     <% else %>
                         Not Available
                     <% end %>
@@ -364,7 +359,7 @@
               <% if !Category.fourth.nil? %>
                   <td>
                     <% if !@cat4users.eql?(0) %>
-                        <%= @cat4rating/@cat4users %>
+                        <%= number_with_precision(@cat4rating/@cat4users, precision: 2) %>
                     <% else %>
                         Not Available
                     <% end %>
@@ -374,7 +369,7 @@
               <% if !Category.fifth.nil? %>
                   <td>
                     <% if !@cat5users.eql?(0) %>
-                        <%= @cat5rating/@cat5users %>
+                        <%= number_with_precision(@cat5rating/@cat5users, precision: 2) %>
                     <% else %>
                         Not Available
                     <% end %>
@@ -383,7 +378,7 @@
 
               <td>
                 <% if !@overallusers.eql?(0) %>
-                    <%= @overallrating/@overallusers %>
+                    <%= number_with_precision(@overallrating/@overallusers, precision: 2) %>
                 <% else %>
                     Not Available
                 <% end %>

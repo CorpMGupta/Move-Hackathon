@@ -97,3 +97,13 @@ hr{display: block;
     border-style: inset;
     border-width: 2px;
     border-top-width: 2px;}
+
+.judge_t tr td{ text-align: center;}
+.anonymous tr td{ text-align: center;}
+
+textarea#comments_area {
+    width: 100%;
+    height: 50px;
+}
+.admin_page tr td{ background-color: #67ad45;}
+.admin_page a:link,.admin_page a:hover,.admin_page a:visited{ color: #FFFFFF !important;}

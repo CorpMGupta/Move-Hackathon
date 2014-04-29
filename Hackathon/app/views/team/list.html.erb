@@ -1,19 +1,19 @@
 <table border="1" width="100%">
   <tr>
-    <td width="10%">
+    <td width="15%">
       <h2>Team List</h2>
     </td>
-    <td width="90%" align="right">
+    <td width="85%" align="right">
     </td>
   </tr>
 <tr>
-  <td width="10%"><%= render :partial => '/adminlinks' %></td>
-  <td width="90%">
+  <td width="15%" valign="top"><%= render :partial => '/adminlinks' %></td>
+  <td width="85%" style="padding-left: 20px;">
         <% if @teams.blank? %>
             <p>There are no teams currently in the system.</p>
         <% else %>
             <p>These are the current teams in our system.</p>
-            <table border="2">
+            <table border="1" cellpadding="5" cellspacing="0">
               <% @teams.each do |c| %>
                   <tr>
                     <td><%= c.name %></td>
@@ -25,7 +25,7 @@
               <% end %>
             </table>
         <% end %>
-        <p><%= link_to 'Prepare new team', {:action => 'new' } %></p>
+        <p class="prepare_team"><%= link_to 'Prepare new team', {:action => 'new' } %></p>
   </td>
 </tr>
 </table>
