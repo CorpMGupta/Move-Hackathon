@@ -57,7 +57,7 @@
 {
     background: url(/assets/Fill.gif) no-repeat right top;
 }
-body{ background-color: #313845; margin: 0; padding: 0; border: 0; color: #ffffff; font-family: Arial; font-size: 14px;}
+body{  margin: 0; padding: 0; border: 0; color: #ffffff; font-family: Arial; font-size: 14px;}
 #hkt_login {
     position:absolute;
     top: 50%;
@@ -107,3 +107,5 @@ textarea#comments_area {
 }
 .admin_page tr td{ background-color: #67ad45;}
 .admin_page a:link,.admin_page a:hover,.admin_page a:visited{ color: #FFFFFF !important;}
+
+

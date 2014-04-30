@@ -3,11 +3,13 @@
 <% if @teams.nil? %>
     <p>No teams</p>
 <% else %>
-    <table width="100%" style="float:left; overflow-y: scroll;">
-      <tr><td style="background-color: #313845;">Team List</td></tr>
+    <table width="100%" style="float:left; overflow-y: scroll;" class="tmlnk">
+      <tr><td>&nbsp;</td></tr>
+      <tr><td style="background-color: #313845;padding:5px 5px; font-family:Arial, Helvetica, sans-serif; font-weight:bold;">Team List</td></tr>
       <% @teams.each do |c| %>
           <tr>
-            <td class="selected" width="100%"><%= link_to c.name, {:id => c.id,
+            <td class="selected" width="100%">
+              <%= link_to c.name, {:id => c.id,
                                      :controller => 'team',
                                      :action => 'show'} %></td>
           </tr>

@@ -22,7 +22,7 @@
         <% session[:modify] = false %>
     <% end %>
 
-    <table border="0" width="100%">
+    <table border="0" width="100%" style="background-color: #313845;">
       <tr>
         <td width="10%">
           <img src="/assets/logo.png" />
@@ -81,13 +81,14 @@
               <td><%= @team.summary %></td>
             </tr>
             <tr>
-              <td>Current Rating(s)</td>
+				<% if @show_judge_report %>
+              <td>Current rating</td>
               <td>
                 <% if @current_team_rating.blank? %>
                     <p>Not Available</p>
                 <% else %>
-                    <% if @show_judge_report %>
-                        <table class="judge_t" border="1" cellspacing="0" cellpadding="5">
+                    
+                        <table class="judge_t" border="1" cellspacing="0" cellpadding="5" width="60%">
                       <tr>
 
                         <th>Judge</th>
@@ -146,14 +147,14 @@
                         <% end %>
                       <% end %>
                     </table>
-                    <% else %>
-                        <%= 'Judge(s) rating(s) unavailable' %>
-                    <% end %>
                 <% end %>
               </td>
+			  <% else %>
+                        <%= 'Judge(s) rating(s) unavailable' %>
+                    <% end %>
             </tr>
             <tr>
-              <td>Average cloud rating</td>
+              <td>Average crowd rating</td>
               <td>
                 <% if @current_team_rating.blank? %>
                     <p>Not Available</p>
@@ -247,8 +248,8 @@
               </td>
             </tr>
             <tr>
-              <td>Rate Team</td>
-              <td>
+              <td>Rate hack</td>
+              <td width="80%">
 
                 <%= form_for :team_rating, url:rating_create_path  do |f| %>
 
@@ -256,12 +257,12 @@
 
                     <% if !Category.first.nil? %>
                         <p><%= f.hidden_field :cat1, :id => 'cat1' %></p>
-                        <p style="width:18%; float: left;"><%= Category.first.name %> </p> <p style="width:81%;float: left;"><img id="Rating11" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat1');" /> <img id="Rating21" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'cat1');" /> <img id="Rating31" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat1');" /> <img id="Rating41" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat1');" /> <img id="Rating51" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat1');" /></p>
+                        <p style="width:20%;float: left;"><%= Category.first.name %> </p> <p style="width:78%;float: left;"><img id="Rating11" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat1');" /> <img id="Rating21" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'cat1');" /> <img id="Rating31" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat1');" /> <img id="Rating41" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat1');" /> <img id="Rating51" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat1');" /></p>
                     <% end %>
 
                     <% if !Category.second.nil? %>
                         <p><%= f.hidden_field :cat2, :id => 'cat2'  %></p>
-                        <p style="width:18%; float: left;"><%= Category.second.name %> </p> <p style="width:81%;float: left;"><img id="Rating12"
+                        <p style="width:20%; float: left;"><%= Category.second.name %> </p> <p style="width:78%;float: left;"><img id="Rating12"
                                                                          class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat2');" /> <img id="Rating22" class="Empty" width="20px"
                                                                                                                     height="20px" onclick="DecideRating(2, 'cat2');" /> <img id="Rating32" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat2');" /> <img
                         id="Rating42" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat2');" /> <img id="Rating52" class="Empty"
@@ -270,7 +271,7 @@
 
                     <% if !Category.third.nil? %>
                         <p><%= f.hidden_field :cat3, :id => 'cat3' %></p>
-                        <p style="width:18%; float: left;"><%= Category.third.name %> </p> <p style="width:81%;float: left;"><img id="Rating13"
+                        <p style="width:20%; float: left;"><%= Category.third.name %> </p> <p style="width:78%;float: left;"><img id="Rating13"
                                                                         class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat3');" /> <img id="Rating23" class="Empty" width="20px"
                                                                                                                    height="20px" onclick="DecideRating(2,
                                 'cat3');" /> <img id="Rating33" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat3');" /> <img
@@ -279,7 +280,7 @@
 
                     <% if !Category.fourth.nil? %>
                         <p><%= f.hidden_field :cat4, :id => 'cat4' %></p>
-                        <p style="width:18%; float: left;"><%= Category.fourth.name %> </p> <p style="width:81%;float: left;"><img id="Rating14"
+                        <p style="width:20%; float: left;"><%= Category.fourth.name %> </p> <p style="width:78%;float: left;"><img id="Rating14"
                                                                          class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat4');" /> <img id="Rating24" class="Empty" width="20px"
                                                                                                                     height="20px" onclick="DecideRating(2, 'cat4');" /> <img id="Rating34" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat4');" /> <img
                         id="Rating44" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat4');" /> <img id="Rating54" class="Empty"
@@ -288,14 +289,14 @@
 
                     <% if !Category.fifth.nil? %>
                         <p><%= f.hidden_field :cat5, :id => 'cat5' %></p>
-                        <p style="width:18%; float: left;"><%= Category.fifth.name %></p><p style="width:81%;float: left;"><img id="Rating15" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat5');" /> <img id="Rating25" class="Empty" width="20px" height="20px" onclick="DecideRating(2,'cat5');" /> <img id="Rating35" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat5');" /> <img id="Rating45" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat5');" /> <img id="Rating55" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat5');" /></p>
+                        <p style="width:20%; float: left;"><%= Category.fifth.name %></p><p style="width:78%;float: left;"><img id="Rating15" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'cat5');" /> <img id="Rating25" class="Empty" width="20px" height="20px" onclick="DecideRating(2,'cat5');" /> <img id="Rating35" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'cat5');" /> <img id="Rating45" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'cat5');" /> <img id="Rating55" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'cat5');" /></p>
                     <% end %>
 
                     <p><%= f.hidden_field :overall, :id => 'overall' %></p>
-                    <p style="width:18%; float: left;">Overall</p> <p style="width:81%;float: left;"><img id="Rating16" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'overall');" /> <img id="Rating26" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'overall');" /> <img id="Rating36" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'overall');" /> <img id="Rating46" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'overall');" /> <img id="Rating56" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'overall');" /></p>
+                    <p style="width:20%; float: left;">Overall</p> <p style="width:78%;float: left;"><img id="Rating16" class="Empty" width="20px" height="20px" onclick="DecideRating(1, 'overall');" /> <img id="Rating26" class="Empty" width="20px" height="20px" onclick="DecideRating(2, 'overall');" /> <img id="Rating36" class="Empty" width="20px" height="20px" onclick="DecideRating(3, 'overall');" /> <img id="Rating46" class="Empty" width="20px" height="20px" onclick="DecideRating(4, 'overall');" /> <img id="Rating56" class="Empty" width="20px" height="20px" onclick="DecideRating(5, 'overall');" /></p>
 
                     <% if !session[:user_id].nil? %>
-                        <p style="width: 18%; float: left; padding-top: 20px;">Comment</p><p style="width:81%;float: left; vertical-align: middle;"><%= f.text_area :comment, :id => "comments_area" %></p>
+                        <p style="width: 20%; float: left; padding-top: 20px;">Comment</p><p style="width:78%;float: left; vertical-align: middle;"><%= f.text_area :comment, :id => "comments_area" %></p>
                     <% end %>
 
                     <p><%= f.hidden_field :tid, { :value => @team.id} %></p>
@@ -315,12 +316,11 @@
               <td>Comments</td>
               <% if !session[:user_id].nil? %>
               <td>
-                <table border="1" cellspacing="0" cellpadding="0">
+                <table border="1" cellspacing="0" cellpadding="10">
                 <% Rating.all.each do |f| %>
                   <% if f.tid.eql?(@team.id) && !f.jid.nil? %>
                       <tr>
-                        <td><%= Judge.all.find(f.jid).name %></td>
-                        <td><%= f.comment %></td>
+                        <td width="18%"><b><%= Judge.all.find(f.jid).name %>: </b></td> <td><%= f.comment.gsub(/\n/, '<br />').html_safe() %></td>
                       </tr>
                   <% end %>
                 <% end %>
@@ -343,6 +343,10 @@
     </table>
 
 <% end %>
-<table border="0" cellpadding="0" cellspacing="0" style="background-color: #313845; height: 30px; width:100%;"></table>
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #313845; height: 30px; width:100%; padding:0px 10px; font-size: 11px;">
+  <tbody><tr>
+    <td>© 2014 Move, Inc. All rights reserved.</td>
+  </tr>
+  </tbody></table>
 
 

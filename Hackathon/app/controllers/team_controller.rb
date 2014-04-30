@@ -118,8 +118,7 @@ class TeamController < ApplicationController
       if @team.update_attributes( :name => params[:updatedname],
                                   :members => params[:updatedmembers],
                                   :description => params[:updateddesc],
-                                  :summary => params[:updatedsummary],
-                                  :screenshot => params[:updatedscreenshot])
+                                  :summary => params[:updatedsummary])
         redirect_to :action => 'show', :id => @team
       else
         render :action => 'edit'

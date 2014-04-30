@@ -49,6 +49,10 @@ class RatingController < ApplicationController
             params[:team_rating][:overall] = f.overall
           end
 
+          if !f.comment.nil?
+            params[:team_rating][:comment] = f.comment + "\n" + params[:team_rating][:comment]
+          end
+
           if f.update(rating_params)
             session[:modify] = true
             chkInsert = true
